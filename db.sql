@@ -53,9 +53,9 @@ CREATE TABLE `member` (
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = 'test1',
-loginPw = 'test1',
-`name` = '테스터1';
+loginId = 'admin',
+loginPw = 'admin',
+`name` = '관리자';
 
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -123,3 +123,51 @@ SELECT * FROM article;
 # 2번글 내용에 자바소스코드 넣기
 UPDATE article SET `body` = '# 자바기본문법\r\n```java\r\nint a = 10;\r\nint b = 20;\r\nint c = a + b;\r\n```'
 WHERE id = '2'; 
+
+# IT 게시판 추가
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = 'JAVA',
+`code` = 'it';
+
+# IT 게시판에 글 5개 작성
+insert into article
+set regDate = NOW(),
+updateDate = NOW(),
+title = "1강, Class",
+`body` = "# Class\r\n- java 기초\r\n\r\n# Main 클래스 예시\r\n```\r\n public class Main {\r\n   public static void main(Strings[] args) {\r\n      int i=1;\r\n      String str='string';\r\n  }\r\n}\r\n```\r\n\r\n# 클래스 접근 제어자\r\n```\r\n - public : public 가 붙은 변수, 메소드는 어떤 클래스에서라도 접근이 가능합니다. \r\n - private : 해당 클래스만 접근이 가능합니다. \r\n - protected : protected 가 붙은 변수, 메소드는 동일 패키지내의 클래스 또는 해당 클래스를 상속 받는 외부 패키지의 클래스에서 접근이 가능합니다.\r\n```",
+memberId = 1,
+boardId = 3;
+
+insert into article
+set regDate = NOW(),
+updateDate = NOW(),
+title = "2강, Variable",
+`body` = "# Variable\r\n- 변수\r\n\r\n# 변수의 타입\r\n\r\n ## 숫자형\r\n```\r\n1)정수형\r\n - byte\r\n - short\r\n - int\r\n - long\r\n 2)실수형\r\n - float\r\n - double\r\n```\r\n## 논리형\r\n```\r\n - boolean \r\n```\r\n## 문자형\r\n```\r\n - char \r\n```\r\n## 문자열\r\n```\r\n - String\r\n```\r\n",
+memberId = 1,
+boardId = 3;
+
+insert into article
+set regDate = NOW(),
+updateDate = NOW(),
+title = "3강",
+`body` = "",
+memberId = 1,
+boardId = 3;
+
+insert into article
+set regDate = NOW(),
+updateDate = NOW(),
+title = "4강",
+`body` = "",
+memberId = 1,
+boardId = 3;
+
+insert into article
+set regDate = NOW(),
+updateDate = NOW(),
+title = "5강",
+`body` = "",
+memberId = 1,
+boardId = 3;
