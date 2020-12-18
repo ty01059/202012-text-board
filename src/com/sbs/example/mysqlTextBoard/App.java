@@ -10,10 +10,10 @@ public class App {
 		Scanner sc = Container.scanner;
 
 		while (true) {
-			System.out.printf("명령어) ");
+			System.out.printf("명령어 : ");
 			String cmd = sc.nextLine();
 
-			MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "textBoard");
+			MysqlUtil.setDBInfo("127.0.0.1", "sbsblog", "sbs123", "textBoard");
 
 			boolean needToExit = false;
 
