@@ -228,6 +228,7 @@ public class BuildService {
 				body = body.replace("${article-detail__reg-date}", article.regDate);
 				body = body.replace("${article-detail__writer}", article.extra__writer);
 				body = body.replace("${article-detail__body}", article.body);
+				body = body.replace("${article-detail__view}", article.view + "");
 				body = body.replace("${article-detail__link-prev-article-url}", getArticleDetailFileName(prevArticleId));
 				body = body.replace("${article-detail__link-prev-article-title-attr}", prevArticle != null ? prevArticle.title : "");
 				body = body.replace("${article-detail__link-prev-article-class-addi}", prevArticleId == 0 ? "a-pointer-events-none" : "");

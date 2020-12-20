@@ -121,10 +121,6 @@ a {
 	margin-left: 10px;
 }
 
-.logo>span>span {
-	color: red;
-}
-
 .logo--mini {
 	font-size: 2rem;
 }
@@ -194,7 +190,7 @@ a {
 
 /* 하단바 시작 */
 .bottom-bar {
-	margin-top: 30px;
+	margin-top: 1px;
 	background-color: black;
 	color: white;
 	padding-top: 30px;
@@ -205,6 +201,15 @@ a {
 	margin-left: 20px;
 }
 /* 하단바 끝 */
+
+/* 메인페이지 시작 */
+.section-1 > div {
+	background-image:url('https://image.freepik.com/free-photo/office-table-with-cup-of-coffee-keyboard-and-notepad_1220-4584.jpg');
+	background-size:cover;
+	flex-basis: 100%;
+	opacity: 0.4;
+}
+/* 메인페이지 끝 */
 
 /* 게시물 리스트 시작 */
 :root {

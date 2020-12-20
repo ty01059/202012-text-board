@@ -1,89 +1,180 @@
+# DB »ı¼º
+DROP DATABASE IF EXISTS textBoard;
+CREATE DATABASE textBoard;
+USE textBoard;
+
+# °Ô½Ã¹° Å×ÀÌºí »ı¼º
+CREATE TABLE article (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    title CHAR(200) NOT NULL,
+    `body` TEXT NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    boardId INT(10) UNSIGNED NOT NULL
+);
+
+# °Ô½Ã¹° µ¥ÀÌÅÍ 3°³ »ı¼º
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = 'Á¦¸ñ1',
+`body` = '³»¿ë1',
+memberId = 1,
+boardId = 1;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = 'Á¦¸ñ2',
+`body` = '³»¿ë2',
+memberId = 1,
+boardId = 1;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = 'Á¦¸ñ3',
+`body` = '³»¿ë3',
+memberId = 1,
+boardId = 1;
+
+# È¸¿ø Å×ÀÌºí »ı¼º
+CREATE TABLE `member` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    loginId CHAR(30) NOT NULL,
+    loginPw VARCHAR(50) NOT NULL,
+    `name` CHAR(30) NOT NULL
+);
+
+# È¸¿ø µ¥ÀÌÅÍ »ı¼º
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'admin',
+loginPw = 'admin',
+`name` = '°ü¸®ÀÚ';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = 'Å×½ºÅÍ2';
+
+# °Ô½ÃÆÇ Å×ÀÌºí »ı¼º
+CREATE TABLE board (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `name` CHAR(20) NOT NULL,
+    `code` CHAR(20) NOT NULL
+);
+
+# °øÁö»çÇ× °Ô½ÃÆÇ Ãß°¡
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '°øÁö»çÇ×',
+`code` = 'notice';
+
+# ÀÚÀ¯ °Ô½ÃÆÇ Ãß°¡
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = 'ÀÚÀ¯',
+`code` = 'free';
+
+UPDATE article
+SET boardId = 2
+LIMIT 2;
+
+# °¢Á¾ ÇÔ¼ö
 /*
-SQLyog Community v13.1.7 (64 bit)
-MySQL - 10.4.14-MariaDB : Database - textBoard
-*********************************************************************
+SELECT DATE(NOW());
+SELECT YEAR(NOW());
+SELECT MONTH(NOW());
+SELECT DAY(NOW());
+SELECT SUBSTR("¾È³çÇÏ¼¼¿ä.", 1, 2);
+SELECT SUBSTR("¾È³çÇÏ¼¼¿ä.", 2, 2);
+SELECT CONCAT("¾È³ç", "ÇÏ¼¼¿ä.");
+SELECT RAND() * 100;
 */
 
-/*!40101 SET NAMES utf8 */;
+# °Ô½Ã¹° ·£´ı »ı¼º
+/*
+insert into article
+set regDate = NOW(),
+updateDate = NOW(),
+title = concat("Á¦¸ñ_", rand()),
+`body` = CONCAT("³»¿ë_", RAND()),
+memberId = FLOOR(RAND() * 2) + 1,
+boardId = FLOOR(RAND() * 2) + 1;
+*/
 
-/*!40101 SET SQL_MODE=''*/;
+# 3¹ø±Û ³»¿ëÀ» ¸¶Å©´Ù¿î ¹®¹ıÀ¸·Î ¼öÁ¤
+UPDATE article SET `body` = '# °øÁö»çÇ×\r\n¾È³çÇÏ¼¼¿ä.\r\nÀÌ »çÀÌÆ®´Â ÀúÀÇ ±Û ¿¬Àç °ø°£ÀÔ´Ï´Ù.\r\n\r\n---\r\n\r\n# ÀÌ »çÀÌÆ®ÀÇ Æ¯Â¡\r\n- A\r\n- B\r\n- C'
+WHERE id = '3';
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`textBoard` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+SELECT * FROM article;
 
-USE `textBoard`;
+# 2¹ø±Û ³»¿ë¿¡ ÀÚ¹Ù¼Ò½ºÄÚµå ³Ö±â
+UPDATE article SET `body` = '# ÀÚ¹Ù±âº»¹®¹ı\r\n```java\r\nint a = 10;\r\nint b = 20;\r\nint c = a + b;\r\n```'
+WHERE id = '2'; 
 
-/*Table structure for table `article` */
+# IT °Ô½ÃÆÇ Ãß°¡
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = 'JAVA',
+`code` = 'it';
 
-DROP TABLE IF EXISTS `article`;
+ALTER TABLE article ADD COLUMN `view` INT UNSIGNED NOT NULL;
 
-CREATE TABLE `article` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `regDate` datetime NOT NULL,
-  `updateDate` datetime NOT NULL,
-  `title` char(200) NOT NULL,
-  `body` text NOT NULL,
-  `memberId` int(10) unsigned NOT NULL,
-  `boardId` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+# IT °Ô½ÃÆÇ¿¡ ±Û 5°³ ÀÛ¼º
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = "1°­, Class",
+`body` = "# Class\r\n- Å¬·¡½º¶õ À¯»çÇÑ ±â´ÉÀ» °¡Áø °´Ã¼µéÀÇ ¼Ó¼ºÀ» ¹­¾î³õÀº ÁıÇÕÃ¼\r\n- java ±âÃÊ\r\n\r\n# Main Å¬·¡½º ¿¹½Ã\r\n```\r\n public class Main {\r\n   public static void main(Strings[] args) {\r\n      int i=1;\r\n      String str='string';\r\n  }\r\n}\r\n```\r\n\r\n# Å¬·¡½º Á¢±Ù Á¦¾îÀÚ\r\n```\r\n - public : public °¡ ºÙÀº º¯¼ö, ¸Ş¼Òµå´Â ¾î¶² Å¬·¡½º¿¡¼­¶óµµ Á¢±ÙÀÌ °¡´ÉÇÕ´Ï´Ù. \r\n - private : ÇØ´ç Å¬·¡½º¸¸ Á¢±ÙÀÌ °¡´ÉÇÕ´Ï´Ù. \r\n - protected : protected °¡ ºÙÀº º¯¼ö, ¸Ş¼Òµå´Â µ¿ÀÏ ÆĞÅ°Áö³»ÀÇ Å¬·¡½º ¶Ç´Â ÇØ´ç Å¬·¡½º¸¦ »ó¼Ó ¹Ş´Â ¿ÜºÎ ÆĞÅ°ÁöÀÇ Å¬·¡½º¿¡¼­ Á¢±ÙÀÌ °¡´ÉÇÕ´Ï´Ù.\r\n```",
+memberId = 1,
+boardId = 3,
+`view`=1;
 
-/*Data for the table `article` */
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = "2°­, Variable(1)",
+`body` = "# Variable\r\n- º¯¼ö ¼±¾ğ\r\n- º¯¼ö¿¡ ÀÌ¸§À» Á¤ÇØ °ªÀ» ÀúÀåÇÒ ¼ö ÀÖ´Â ¸Ş¸ğ¸® °ø°£À» »ı¼º\r\n- µ¥ÀÌÅÍ Å¸ÀÔ¿¡ µû¶ó¼­ º¯¼öÀÇ Å©±â°¡ ´Ş¶óÁø´Ù.\r\n\r\n# º¯¼öÀÇ Å¸ÀÔ\r\n\r\n ## ¼ıÀÚÇü\r\n```\r\n1)Á¤¼öÇü\r\n - byte\r\n - short\r\n - int\r\n - long\r\n 2)½Ç¼öÇü\r\n - float\r\n - double\r\n```\r\n## ³í¸®Çü\r\n```\r\n - boolean : true, false\r\n```\r\n## ¹®ÀÚÇü\r\n```\r\n - char : 'a', 'b' ... \r\n```\r\n## ¹®ÀÚ¿­\r\n```\r\n - String : 'abc' ...\r\n```\r\n\r\n# ¿¹½Ã\r\n# ",
+memberId = 1,
+boardId = 3,
+`view`=2;
 
-insert  into `article`(`id`,`regDate`,`updateDate`,`title`,`body`,`memberId`,`boardId`) values 
-(1,'2020-12-18 18:53:35','2020-12-18 18:53:35','ì œëª©1','ë‚´ìš©1',1,2),
-(2,'2020-12-18 18:53:35','2020-12-18 18:53:35','ì œëª©2','# ìë°”ê¸°ë³¸ë¬¸ë²•\r\n```java\r\nint a = 10;\r\nint b = 20;\r\nint c = a + b;\r\n```',1,2),
-(3,'2020-12-18 18:53:35','2020-12-18 18:53:35','ì œëª©3','# ê³µì§€ì‚¬í•­\r\nì•ˆë…•í•˜ì„¸ìš”.\r\nì´ ì‚¬ì´íŠ¸ëŠ” ì €ì˜ ê¸€ ì—°ì¬ ê³µê°„ì…ë‹ˆë‹¤.\r\n\r\n---\r\n\r\n# ì´ ì‚¬ì´íŠ¸ì˜ íŠ¹ì§•\r\n- A\r\n- B\r\n- C',1,1),
-(4,'2020-12-18 18:53:35','2020-12-18 18:53:35','1ê°•, Class','# Class\r\n- í´ë˜ìŠ¤ë€ ìœ ì‚¬í•œ ê¸°ëŠ¥ì„ ê°€ì§„ ê°ì²´ë“¤ì˜ ì†ì„±ì„ ë¬¶ì–´ë†“ì€ ì§‘í•©ì²´\r\n- java ê¸°ì´ˆ\r\n\r\n# Main í´ë˜ìŠ¤ ì˜ˆì‹œ\r\n```\r\n public class Main {\r\n   public static void main(Strings[] args) {\r\n      int i=1;\r\n      String str=\'string\';\r\n  }\r\n}\r\n```\r\n\r\n# í´ë˜ìŠ¤ ì ‘ê·¼ ì œì–´ì\r\n```\r\n - public : public ê°€ ë¶™ì€ ë³€ìˆ˜, ë©”ì†Œë“œëŠ” ì–´ë–¤ í´ë˜ìŠ¤ì—ì„œë¼ë„ ì ‘ê·¼ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤. \r\n - private : í•´ë‹¹ í´ë˜ìŠ¤ë§Œ ì ‘ê·¼ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤. \r\n - protected : protected ê°€ ë¶™ì€ ë³€ìˆ˜, ë©”ì†Œë“œëŠ” ë™ì¼ íŒ¨í‚¤ì§€ë‚´ì˜ í´ë˜ìŠ¤ ë˜ëŠ” í•´ë‹¹ í´ë˜ìŠ¤ë¥¼ ìƒì† ë°›ëŠ” ì™¸ë¶€ íŒ¨í‚¤ì§€ì˜ í´ë˜ìŠ¤ì—ì„œ ì ‘ê·¼ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.\r\n```',1,3),
-(5,'2020-12-18 18:53:35','2020-12-18 18:53:35','2ê°•, Variable(1)','# Variable\r\n- ë³€ìˆ˜ ì„ ì–¸\r\n- ë³€ìˆ˜ì— ì´ë¦„ì„ ì •í•´ ê°’ì„ ì €ì¥í•  ìˆ˜ ìˆëŠ” ë©”ëª¨ë¦¬ ê³µê°„ì„ ìƒì„±\r\n- ë°ì´í„° íƒ€ì…ì— ë”°ë¼ì„œ ë³€ìˆ˜ì˜ í¬ê¸°ê°€ ë‹¬ë¼ì§„ë‹¤.\r\n\r\n# ë³€ìˆ˜ì˜ íƒ€ì…\r\n\r\n ## ìˆ«ìí˜•\r\n```\r\n1)ì •ìˆ˜í˜•\r\n - byte\r\n - short\r\n - int\r\n - long\r\n 2)ì‹¤ìˆ˜í˜•\r\n - float\r\n - double\r\n```\r\n## ë…¼ë¦¬í˜•\r\n```\r\n - boolean : true, false\r\n```\r\n## ë¬¸ìí˜•\r\n```\r\n - char : \'a\', \'b\' ... \r\n```\r\n## ë¬¸ìì—´\r\n```\r\n - String : \'abc\' ...\r\n```\r\n\r\n# ì˜ˆì‹œ\r\n# ',1,3),
-(6,'2020-12-18 18:53:35','2020-12-18 18:53:35','3ê°•, Variable(2)','# Variable\r\n- ë³€ìˆ˜ ì„ ì–¸\r\n- ë³€ìˆ˜ë“¤ì˜ ì§‘í•©\r\n\r\n# ë°°ì—´ì˜ ì¢…ë¥˜\r\n\r\n ## Array\r\n```\r\n- ë³€ìˆ˜ë¥¼ ì„ ì–¸í•˜ë©´ì„œ í¬ê¸°ë¥¼ ì§€ì •í•´ì£¼ì–´ì•¼ í•œë‹¤.\r\n- í•œë²ˆ ë°°ì—´ì„ ì„ ì–¸í•˜ë©´ í¬ê¸°ë¥¼ ë³€ê²½í•  ìˆ˜ ì—†ë‹¤.\r\n\r\nex)\r\n// ì„ ì–¸\r\nint[] i = new int[10];\r\nString[] str = new String[10];\r\n// ì¶”ì¶œ\r\nint[1];\r\nString[2];\r\n```\r\n## List\r\n```\r\n- ë³€ìˆ˜ ì„ ì–¸í•˜ë©´ì„œ í¬ê¸°ë¥¼ ì§€ì •í•´ì£¼ì§€ ì•Šì•„ë„ ëœë‹¤.\r\n- ê°’ì˜ í¬ê¸°ê°€ ë³€í•˜ëŠ” ê²½ìš° ì‚¬ìš©\r\n\r\nex)\r\nimport java.util.ArrayList;\r\nArrayList<Integer> list = new ArrayList<Integer>();\r\n\r\n// ê°’ ì¶”ê°€\r\nlist.add(1);\r\nlist.add(2);\r\nlist.add(3); // list = {1,2,3}\r\n\r\n// ê°’ ì¶”ì¶œ\r\nlist.get(0); // 1\r\n\r\n// Listí¬ê¸°ë¥¼ ë°˜í™˜\r\nlist.size(); // 3\r\n\r\n// ê°’ì´ ìˆëŠ”ì§€ í™•ì¸\r\nlist.contains(2); // true\r\n\r\n// ê°’ ì œê±°\r\nlist.remove(0); // list = {2,3}\r\n```\r\n## Map\r\n```\r\n- (key, value)ë¡œ ê°’ì„ ì €ì¥í•œë‹¤.\r\n- indexì— ì œí•œë°›ì§€ ì•Šê³  ê°’ì„ ì°¾ê±°ë‚˜ ì €ì¥í•  ìˆ˜ ìˆë‹¤.\r\n\r\nex)\r\nimport java.util.Map;\r\nimport java.util.HashMap;\r\nHashMap<String, String> map = new HashMap<String, String>();\r\n\r\n// ê°’ ì €ì¥\r\nmap.put(\"key\", \"value\"); // map = {\"key\" : \"value\"}\r\n\r\n// ê°’ ì¶”ì¶œ\r\nmap.get(\"key\"); // \"value\"\r\n\r\n// ê°’ì„ í™•ì¸\r\nmap.containsKey(\"key\"); // true\r\n\r\n// ê°’ì„ ì œê±°\r\nmap.remove(\"key\");\r\n\r\n// í¬ê¸° ë°˜í™˜\r\nmap.size(); // 1',1,3),
-(7,'2020-12-18 18:53:35','2020-12-18 18:53:35','4ê°•, ì œì–´ë¬¸','# ì œì–´ë¬¸\r\n- í”„ë¡œê·¸ë¨ì˜ íë¦„ì„ ë³€ê²½í•  ìˆ˜ ìˆê²Œ ë„ì™€ì¤€ë‹¤.\r\n\r\n# ì œì–´ë¬¸ ì¢…ë¥˜\r\n\r\n ## if\r\n```\r\n- ì¡°ê±´ë¬¸ì´ trueì¼ ê²½ìš° ifë¬¸ì„ ì‹¤í–‰í•˜ê³  falseì¼ ê²½ìš° ì•„ë˜ë¡œ ë‚´ë ¤ê°€ë©´ì„œ ì¡°ê±´ì— ë§ëŠ” ifë¬¸ì„ ì°¾ëŠ”ë‹¤.\r\n- ì¡°ê±´ë¬¸ì— ë§ëŠ” ifë¬¸ì´ ì—†ì„ ê²½ìš° elseë¥¼ ì‹¤í–‰í•˜ê±°ë‚˜ ifë¬¸ì„ ë²—ì–´ë‚œë‹¤.\r\n- ë¹„êµì—°ì‚°ìë¥¼ ì‚¬ìš©í•˜ì—¬ ì¡°ê±´íŒë‹¨ì„ í•  ìˆ˜ ìˆë‹¤.\r\n\r\nex)\r\nif(ì¡°ê±´ë¬¸) {\r\n...\r\n} else if(ì¡°ê±´ë¬¸) {\r\n...\r\n} else {\r\n...\r\n}\r\n\r\n```\r\n## switch/case\r\n```\r\n- ifë¬¸ê³¼ ë¹„ìŠ·í•˜ì§€ë§Œ ì¢€ ë” ì •í˜•í™”ë¨\r\n- ì…ë ¥ë³€ìˆ˜ì— ì¼ì¹˜í•˜ëŠ” ì…ë ¥ê°’ì„ ì°¾ì•„ ì‹¤í–‰í•œë‹¤.\r\n- ì°¾ëŠ” ê°’ì´ ì—†ì„ ê²½ìš° defaultë¥¼ ì‹¤í–‰\r\n\r\nex)\r\nswitch(ì…ë ¥ë³€ìˆ˜) {\r\n    case ì…ë ¥ê°’1: ...\r\n        break;\r\n    case ì…ë ¥ê°’2: ...\r\n        break;\r\n    default: ...\r\n        break;\r\n}\r\n```\r\n## while\r\n```\r\n- ì¡°ê±´ë¬¸ì´ trueì¼ ê²½ìš° ë°˜ë³µ ì‹¤í–‰\r\n- whileë¬¸ì„ ë¹ ì ¸ë‚˜ê°€ëŠ” ì½”ë“œê°€ ì—†ì„ ê²½ìš° ë¬´í•œ ë£¨í”„ì— ë¹ ì§„ë‹¤.\r\n- ë¬´í•œë£¨í”„ë¥¼ ë¹ ì ¸ë‚˜ê°€ê¸° ìœ„í•´ì„œëŠ” break; ë¥¼ ì‚¬ìš©í•œë‹¤.\r\n- ê²€ìƒ‰ ì¡°ê±´ì— ë§ì§€ ì•Šì„ ê²½ìš° continue; ë¥¼ ì‚¬ìš©í•´ì„œ whileë¬¸ì„ ì²˜ìŒë¶€í„° ì‹¤í–‰í•  ìˆ˜ ìˆë‹¤.\r\n\r\nex)\r\nwhile(ì¡°ê±´ë¬¸) {\r\n...\r\nbreak;\r\n}\r\n```\r\n\r\n## for\r\n```\r\n- ì´ˆê¸°ì¹˜ : ì²˜ìŒ ì‹œì‘ ìœ„ì¹˜\r\n- ì¦ê°€ì¹˜ : ì´ˆê¸°ì¹˜ì—ì„œ ì–¼ë§ˆë§Œí¼ ì¦ê°€ì‹œí‚¬ê²ƒì¸ê°€\r\n- forë¬¸ì—ì„œë„ continue; ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆë‹¤.\r\n\r\nex)\r\nfor (ì´ˆê¸°ì¹˜; ì¡°ê±´ë¬¸; ì¦ê°€ì¹˜) {\r\n...\r\n}\r\n```\r\n\r\n## foreach\r\n```\r\n- ë°°ì—´ì•ˆì— ìˆëŠ” ê°’ë“¤ì„ í•œê°œì”© ì°¨ë¡€ëŒ€ë¡œ êº¼ë‚´ì„œ ë°˜ë³µí•œë‹¤.\r\n- ë°°ì—´ì˜ í¬ê¸°ë§Œí¼ ë°˜ë³µ\r\n\r\nex)\r\nint[] array = {1, 2, 3};\r\nfor(int i : array) {\r\nSystem.out.printf(i); // 1 2 3\r\n...\r\n}\r\n\r\nArrayList<String>() list = new ArrayList<String>();\r\nlist.add(\"a\");\r\nlist.add(\"b\");\r\nlist.add(\"c\");\r\nfor(String str : list) {\r\nSystem.out.printf(str); // a b c\r\n...\r\n}\r\n```',1,3),
-(8,'2020-12-18 18:53:35','2020-12-18 18:53:35','5ê°•, ê°ì²´ ì§€í–¥ í”„ë¡œê·¸ë˜ë°','# ê°ì²´ì§€í–¥ í”„ë¡œê·¸ë˜ë°\r\n\r\n```java\r\n - java : ê°ì²´ì§€í–¥ í”„ë¡œê·¸ë˜ë° ì–¸ì–´\r\n```\r\n\r\n# ê°œë…\r\n\r\n## í´ë˜ìŠ¤\r\n```\r\n - ê°ì²´ë¥¼ ë§Œë“œëŠ” ê¸°ëŠ¥\r\n - í´ë˜ìŠ¤ ë‚´ì—ì„œ ë³€ìˆ˜ë¥¼ ì„ ì–¸í•  ìˆ˜ ìˆë‹¤. (=ê°ì²´ ë³€ìˆ˜)\r\n - ë©”ì†Œë“œë¥¼ ì´ìš©í•´ì„œ í´ë˜ìŠ¤ì˜ ë³€ìˆ˜ì— ê°’ì„ ì…ë ¥í•  ìˆ˜ ìˆë‹¤.\r\n - ê°ì²´ ë³€ìˆ˜ëŠ” ê³µìœ ë˜ì§€ ì•ŠëŠ”ë‹¤.\r\n \r\n ex)\r\npublic class Animal {\r\n    String name;\r\n}\r\n\r\n// ì„ ì–¸, ì ‘ê·¼ ê°€ëŠ¥\r\nAnimal animal = new Animal();\r\nanimal.name;\r\n```\r\n\r\n## ë©”ì†Œë“œ\r\n```\r\n - í´ë˜ìŠ¤ ë‚´ì˜ í•¨ìˆ˜\r\n - ì…ë ¥ê°’ê³¼ ë¦¬í„´ê°’ì„ í•„ìš”ì— ë”°ë¼ì„œ ì‘ì„±í•  ìˆ˜ ìˆë‹¤.\r\n - return; ë§Œ ë‹¨ë…ìœ¼ë¡œ ì“°ì¼ ê²½ìš° ë©”ì†Œë“œë¥¼ ì¦‰ì‹œ ë¹ ì ¸ë‚˜ê°„ë‹¤.\r\n \r\n ex)\r\npublic class Test {\r\n    // ë©”ì†Œë“œ ì‘ì„±\r\n    public int sum(int a, int b) {\r\n        return a+b;\r\n    }\r\n}\r\n```\r\n\r\n## call by value\r\n```\r\n - ë©”ì†Œë“œë¡œ ê°ì²´ë¥¼ ì „ë‹¬í•  ê²½ìš° ë©”ì†Œë“œì—ì„œ ê°ì²´ì˜ ê°ì²´ë³€ìˆ˜ ê°’ì„ ë³€ê²½í•  ìˆ˜ ìˆë‹¤.\r\n```\r\n\r\n## ìƒì†\r\n```\r\n - ìì‹ í´ë˜ìŠ¤ extends ë¶€ëª¨ í´ë˜ìŠ¤ { }\r\n - extends ë¥¼ ì‚¬ìš©í•˜ì—¬ ë¶€ëª¨ í´ë˜ìŠ¤ì˜ ê¸°ëŠ¥ì„ ìƒì† ë°›ì„ ìˆ˜ ìˆë‹¤.\r\n - IS-A ê´€ê³„ (ìƒìœ„ í•˜ìœ„ ê°œë…ê´€ê³„ or ìƒì†ê´€ê³„)\r\n - ìì‹ í´ë˜ìŠ¤ëŠ” ë¶€ëª¨ í´ë˜ìŠ¤ì˜ ë©”ì†Œë“œë¥¼ ì˜¤ë²„ë¼ì´ë”©, ì˜¤ë²„ë¡œë”©ì„ í•  ìˆ˜ ìˆë‹¤.\r\n - ìë°”ëŠ” ë‹¤ì¤‘ ìƒì†ì„ ì§€ì›í•˜ì§€ ì•ŠëŠ”ë‹¤.\r\n \r\nex)\r\npublic class Dog extends Animal { }\r\n```\r\n\r\n## ìƒì„±ì\r\n```\r\n - í´ë˜ìŠ¤ ê°ì²´ë¥¼ ìƒì„±ì‹œ ê°ì²´ì— ê°’ì„ ë„£ì„ ìˆ˜ ìˆë‹¤.\r\n - ë©”ì†Œë“œëª…ê³¼ í´ë˜ìŠ¤ëª…ì´ ë™ì¼í•´ì•¼ í•œë‹¤.\r\n - ë¦¬í„´íƒ€ì…ì„ ì •ì˜í•˜ì§€ ì•ŠëŠ”ë‹¤.\r\n - ìƒì„±ì ì˜¤ë²„ë¡œë”© ê°€ëŠ¥.\r\n```\r\n\r\n## ì¸í„°í˜ì´ìŠ¤\r\n```\r\n - ìƒìœ„ ê°œë…ì´ ê°™ì€ ì¢…ë¥˜ë“¤ì˜ êµ¬ì¡°ë¥¼ ëª¨ì•„ë†“ì€ ê²ƒ\r\n```\r\n\r\n## ë‹¤í˜•ì„±\r\n```\r\n - ì¶”í›„ ì‘ì„±\r\n```\r\n\r\n## ì¶”ìƒí´ë˜ìŠ¤\r\n```\r\n - ì¶”í›„ ì‘ì„±\r\n```',1,3);
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = "3°­, Variable(2)",
+`body` = "",
+memberId = 1,
+boardId = 3,
+`view`=3;
 
-/*Table structure for table `board` */
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = "4°­, Á¦¾î¹®",
+`body` = "",
+memberId = 1,
+boardId = 3,
+`view`=4;
 
-DROP TABLE IF EXISTS `board`;
-
-CREATE TABLE `board` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `regDate` datetime NOT NULL,
-  `updateDate` datetime NOT NULL,
-  `name` char(20) NOT NULL,
-  `code` char(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
-/*Data for the table `board` */
-
-insert  into `board`(`id`,`regDate`,`updateDate`,`name`,`code`) values 
-(1,'2020-12-18 18:53:35','2020-12-18 18:53:35','ê³µì§€ì‚¬í•­','notice'),
-(2,'2020-12-18 18:53:35','2020-12-18 18:53:35','ììœ ','free'),
-(3,'2020-12-18 18:53:35','2020-12-18 18:53:35','JAVA','it');
-
-/*Table structure for table `member` */
-
-DROP TABLE IF EXISTS `member`;
-
-CREATE TABLE `member` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `regDate` datetime NOT NULL,
-  `updateDate` datetime NOT NULL,
-  `loginId` char(30) NOT NULL,
-  `loginPw` varchar(50) NOT NULL,
-  `name` char(30) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
-
-/*Data for the table `member` */
-
-insert  into `member`(`id`,`regDate`,`updateDate`,`loginId`,`loginPw`,`name`) values 
-(1,'2020-12-18 18:53:35','2020-12-18 18:53:35','admin','admin','ê´€ë¦¬ì'),
-(2,'2020-12-18 18:53:35','2020-12-18 18:53:35','test2','test2','í…ŒìŠ¤í„°2');
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = "5°­, °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö",
+`body` = "",
+memberId = 1,
+boardId = 3,
+`view`=5;
