@@ -264,7 +264,7 @@ list.remove(0); // list = {2,3}
 ex)
 import java.util.Map;
 import java.util.HashMap;
-HashMap<String, String> map = new HashMap<String, String>();
+HashMap<dataType, dataType> map = new HashMap<dataType, dataType>();
 
 // 값 저장
 map.put("key", "value"); // map = {"key" : "value"}

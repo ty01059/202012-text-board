@@ -23,6 +23,7 @@ public class BuildService {
 
 		Util.copy("site_template/app.css", "site/app.css");
 		Util.copy("site_template/app.js", "site/app.js");
+		Util.copy("site_template/favicon.ico", "site/favicon.ico");
 
 		buildIndexPage();
 		buildArticleListPages();
