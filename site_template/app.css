@@ -340,6 +340,10 @@ a {
 	position:absolute;
 }
 
+.main-content {
+	height: 100vh;
+}
+
 .main-content > div:nth-child(1) {
 	background-image:url('https://image.freepik.com/free-photo/office-table-with-cup-of-coffee-keyboard-and-notepad_1220-4584.jpg');
 	background-size:cover;
