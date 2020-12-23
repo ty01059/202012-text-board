@@ -223,7 +223,7 @@ public class BuildService {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(head);
-
+				
 				String body = bodyTemplate.replace("${article-detail__title}", article.title);
 				body = body.replace("${article-detail__board-name}", article.extra__boardName);
 				body = body.replace("${article-detail__reg-date}", article.regDate);
@@ -239,6 +239,7 @@ public class BuildService {
 				body = body.replace("${article-detail__link-next-article-url}", getArticleDetailFileName(nextArticleId));
 				body = body.replace("${article-detail__link-next-article-title-attr}", nextArticle != null ? nextArticle.title : "");
 				body = body.replace("${article-detail__link-next-article-class-addi}", nextArticleId == 0 ? "a-pointer-events-none" : "");
+				body = body.replace("${article-detail__body-youtube}", article.extra__boardCode.equals("free") ? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" : "");
 
 				sb.append(body);
 

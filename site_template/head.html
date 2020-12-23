@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C0JV64MZYX"></script>
+<script async
+	src="https://www.googletagmanager.com/gtag/js?id=G-C0JV64MZYX"></script>
 <!-- Google adsense -->
-<script data-ad-client="ca-pub-6672613329449103" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script data-ad-client="ca-pub-6672613329449103" async
+	src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -13,15 +15,22 @@
   gtag('config', 'G-C0JV64MZYX');
 </script>
 <meta charset="UTF-8" />
+<!-- 오픈그래프 적용 -->
+<meta property="og:title" content="TextBlog" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog.yhj.kr/" />
+<meta property="og:image" content="https://image.freepik.com/free-photo/office-table-with-cup-of-coffee-keyboard-and-notepad_1220-4584.jpg" />
+
 <title>게시판 작성</title>
-<meta name="google-site-verification" content="P3TaZ-4fh-rMYo6dUuy7t4gVVqYiJzUpGX3n2UbOIoQ" />
+<meta name="google-site-verification"
+	content="P3TaZ-4fh-rMYo6dUuy7t4gVVqYiJzUpGX3n2UbOIoQ" />
 <!-- 폰트어썸 불러오기 -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <link rel="stylesheet" href="app.css" />
 <!-- 파비콘 적용 -->
-<link rel=" shortcut icon" href="favicon.ico">
-<link rel="icon" href="favicon.ico">
+<link rel=" shortcut icon" href="favicon.ico" />
+<link rel="icon" href="favicon.ico" />
 
 </head>
 <body>
@@ -29,11 +38,8 @@
 		<!-- 로고바 시작 -->
 		<header class="logo-bar con-min-width">
 			<div class="con height-100p flex flex-jc-c">
-				<a href="index.html" class="logo flex flex-ai-c">
-					<i class="fab fa-jenkins"></i>
-					<span>
-						Blog
-					</span>
+				<a href="index.html" class="logo flex flex-ai-c"> <span>
+						Blog </span>
 				</a>
 			</div>
 		</header>
@@ -44,58 +50,37 @@
 			<div class="con height-100p">
 				<nav class="menu-bar__menu-1">
 					<ul class="flex">
-						<li>
-							<a href="index.html" class="block">
-								<i class="fas fa-home"></i>
-								<span>HOME</span>
-							</a>
-						</li>
-						<li>
-							<a class="block">
-								<i class="fas fa-list"></i>
-								<span>ARTICLES</span>
-							</a>
+						<li><a href="index.html" class="block"> <i
+								class="fas fa-home"></i> <span>HOME</span>
+						</a></li>
+						<li><a class="block"> <i class="fas fa-list"></i> <span>ARTICLES</span>
+						</a>
+							<ul>${menu-bar__menu-1__board-menu-content}
+							</ul></li>
+						<li><a class="block"> <i class="fas fa-link"></i> <span>LINK</span>
+						</a>
 							<ul>
-								${menu-bar__menu-1__board-menu-content}
-							</ul>
-						</li>
-						<li>
-							<a class="block">
-								<i class="fas fa-link"></i>
-								<span>LINK</span>
-							</a>
-							<ul>
-								<li>
-									<a href="https://jhs512.github.io/blog/" target="_blank"
-										class="block">
-										<i class="fab fa-blogger-b"></i>
+								<li><a href="https://jhs512.github.io/blog/"
+									target="_blank" class="block"> <i class="fab fa-blogger-b"></i>
 										<span>BLOG</span>
-									</a>
-								</li>
-								<li>
-									<a href="https://github.com/" target="_blank" class="block">
-										<i class="fab fa-github"></i>
-										<span>GITHUB</span>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a href="stat.html" class="block">
-								<i class="fas fa-chart-pie"></i>
-								<span>STATISTICS</span>
-							</a>
-						</li>
+								</a></li>
+								<li><a href="https://github.com/" target="_blank"
+									class="block"> <i class="fab fa-github"></i> <span>GITHUB</span>
+								</a></li>
+							</ul></li>
+						<li><a href="stat.html" class="block"> <i
+								class="fas fa-chart-pie"></i> <span>STATISTICS</span>
+						</a></li>
 					</ul>
 				</nav>
 			</div>
 		</header>
 		<!-- 메뉴바 끝 -->
 
-		<main class="flex-grow-1 backgroundimg flex flex-jc-c">
-		<div>
-			<section class="title-bar con-min-width">
-				<h1 class="con">
-					${title-bar__content}
-				</h1>
-			</section>
+		<main class="flex-grow-1 overflow-y-hidden">
+			<div class="main-content flex flex-jc-c position-relative">
+				<div class="position-absolute con-min-width"></div>
+				<div class="position-absolute background-opacity overflow-y-auto height-88per">
+					<section class="title-bar con-min-width">
+						<h1 class="con">${title-bar__content}</h1>
+					</section>
