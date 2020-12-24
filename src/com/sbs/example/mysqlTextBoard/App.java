@@ -13,7 +13,7 @@ public class App {
 			System.out.printf("명령어 : ");
 			String cmd = sc.nextLine();
 
-			MysqlUtil.setDBInfo("127.0.0.1", "sbsblog", "sbs123", "textBoard");
+			MysqlUtil.setDBInfo("127.0.0.1", "sbsblog", "sbs123", "demoBoard");
 
 			boolean needToExit = false;
 

@@ -340,6 +340,10 @@ a {
 	position:absolute;
 }
 
+.overflow-hidden {
+	overflow: hidden;
+}
+
 .main-content {
 	height: 100vh;
 }
