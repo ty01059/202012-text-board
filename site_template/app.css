@@ -43,6 +43,10 @@ body, ul, li, h1, h2, h3 {
 	list-style: none;
 }
 
+body {
+	overflow: hidden;	
+}
+
 a {
 	color: inherit;
 	text-decoration: none;
@@ -344,8 +348,20 @@ a {
 	overflow: hidden;
 }
 
+.overflow-x-hidden {
+	overflow-x: hidden;
+}
+
+.overflow-y-auto {
+	overflow-y: auto;	
+}
+
 .main-content {
-	height: 100vh;
+	height: 79vh;
+}
+
+.height-88per {
+	height: 88%;
 }
 
 .main-content > div:nth-child(1) {
