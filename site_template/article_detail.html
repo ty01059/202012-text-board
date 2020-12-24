@@ -18,6 +18,13 @@
 <!-- 토스트 UI 에디터, 신택스 하이라이트 플러그인 추가 -->
 <script
 	src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js"></script>
+<!-- 토스트 API, 댓글 수 가져오기, 새로고침마다 가져오기 -->	
+<script id="dsq-count-scr" src="https://custom-blog.disqus.com/count.js" async></script>
+<script>
+  var disqus_config = function () {
+    this.callbacks.onNewComment = [function() { DISQUSWIDGETS.getCount({reset: true}); }];
+  };
+</script>
 
 <section class="section-1 con-min-width">
 	<div class="con">
@@ -30,11 +37,11 @@
 			<div class="article-detail__writer"><i class="fas fa-user-edit"></i>&nbsp;${article-detail__writer}</div>
 				<div class="article-detail__reg-date">${article-detail__reg-date}</div>
 				<div><i class="fas fa-eye"></i>&nbsp;${article-detail__view}</div>
+				<div><i class="fas fa-comments"></i>&nbsp;${article-detail__comment-count}</div>
 			</div>
-
+			${article-detail__link-youtube}
 			<div class="article-detail__body main-font">${article-detail__body}</div>
 
-			<script id="dsq-count-scr" src="https://custom-blog.disqus.com/count.js" async></script>
 			<div class="article-detail__reply-box">
 				<div id="disqus_thread"></div>
 				<script>

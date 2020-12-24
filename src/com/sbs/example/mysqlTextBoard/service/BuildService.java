@@ -239,7 +239,9 @@ public class BuildService {
 				body = body.replace("${article-detail__link-next-article-url}", getArticleDetailFileName(nextArticleId));
 				body = body.replace("${article-detail__link-next-article-title-attr}", nextArticle != null ? nextArticle.title : "");
 				body = body.replace("${article-detail__link-next-article-class-addi}", nextArticleId == 0 ? "a-pointer-events-none" : "");
-
+				body = body.replace("${article-detail__link-youtube}", article.extra__boardCode.equals("free") ? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" : "");
+				body = body.replace("${article-detail__comment-count}", "<span class=\"disqus-comment-count\" data-disqus-url=\"http://blog.yhj.kr/article_detail_" + article.id + ".html\"></span>");
+				
 				sb.append(body);
 
 				sb.append(foot);
