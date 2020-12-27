@@ -242,6 +242,9 @@ public class BuildService {
 				body = body.replace("${article-detail__link-youtube}", article.extra__boardCode.equals("free") ? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" : "");
 				body = body.replace("${article-detail__comment-count}", 1 + "");
 				
+				body = body.replace("${site-domain}", "blog.yhj.kr");
+				body = body.replace("${file-name}", getArticleDetailFileName(article.id));
+				
 				sb.append(body);
 
 				sb.append(foot);
@@ -317,7 +320,6 @@ public class BuildService {
 		head = head.replace("${current-date}", currentDate);
 		head = head.replace("${site-main-url}", siteMainUrl);
 		head = head.replace("${site-keywords}", siteKeywords);
-//		<meta property="og:title" content="TextBlog" />
 
 		head = head.replace("${title-bar__content}", titleBarContentHtml);
 
