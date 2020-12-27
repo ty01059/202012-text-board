@@ -239,8 +239,9 @@ public class BuildService {
 				body = body.replace("${article-detail__link-next-article-url}", getArticleDetailFileName(nextArticleId));
 				body = body.replace("${article-detail__link-next-article-title-attr}", nextArticle != null ? nextArticle.title : "");
 				body = body.replace("${article-detail__link-next-article-class-addi}", nextArticleId == 0 ? "a-pointer-events-none" : "");
-				body = body.replace("${article-detail__body-youtube}", article.extra__boardCode.equals("free") ? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" : "");
-
+				body = body.replace("${article-detail__link-youtube}", article.extra__boardCode.equals("free") ? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" : "");
+				body = body.replace("${article-detail__comment-count}", 1 + "");
+				
 				sb.append(body);
 
 				sb.append(foot);
@@ -258,8 +259,12 @@ public class BuildService {
 	private String getArticleDetailFileName(int id) {
 		return "article_detail_" + id + ".html";
 	}
-
+	
 	private String getHeadHtml(String pageName) {
+		return getHeadHtml(pageName, null);
+	}
+
+	private String getHeadHtml(String pageName, Object relObj) {
 		String head = Util.getFileContents("site_template/head.html");
 
 		StringBuilder boardMenuContentHtml = new StringBuilder();
@@ -280,12 +285,67 @@ public class BuildService {
 		}
 
 		head = head.replace("${menu-bar__menu-1__board-menu-content}", boardMenuContentHtml.toString());
-
+		
 		String titleBarContentHtml = getTitleBarContentByPageName(pageName);
 
 		head = head.replace("${title-bar__content}", titleBarContentHtml);
 
+		String pageTitle = getPageTitle(pageName, relObj);
+
+		head = head.replace("${page-title}", pageTitle);
+
+		String siteName = "DevelopersBlog";
+		String siteSubject = "개발자의 기술/일상 블로그";
+		String siteDescription = "개발자의 기술/일상 관련 글들을 공유합니다.";
+		String siteKeywords = "HTML, CSS, JAVASCRIPT, JAVA, SPRING, MySQL, 리눅스, 리액트";
+		String siteDomain = "blog.yhj.kr";
+		String siteMainUrl = "https://" + siteDomain;
+		String currentDate = Util.getNowDateStr().replace(" ", "T");
+		
+		if ( relObj instanceof Article ) {
+			Article article = (Article)relObj;
+			siteSubject = article.title;
+			siteDescription = article.body;
+			siteDescription = siteDescription.replaceAll("[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]", "");
+		}
+
+		head = head.replace("${site-name}", siteName);
+		head = head.replace("${site-subject}", siteSubject);
+		head = head.replace("${site-description}", siteDescription);
+		head = head.replace("${site-domain}", siteDomain);
+		head = head.replace("${site-domain}", siteDomain);
+		head = head.replace("${current-date}", currentDate);
+		head = head.replace("${site-main-url}", siteMainUrl);
+		head = head.replace("${site-keywords}", siteKeywords);
+//		<meta property="og:title" content="TextBlog" />
+
+		head = head.replace("${title-bar__content}", titleBarContentHtml);
+
 		return head;
+	}
+	
+	private String getPageTitle(String pageName, Object relObj) {
+		StringBuilder sb = new StringBuilder();
+
+		String forPrintPageName = pageName;
+
+		if (forPrintPageName.equals("index")) {
+			forPrintPageName = "home";
+		}
+
+		forPrintPageName = forPrintPageName.toUpperCase();
+		forPrintPageName = forPrintPageName.replaceAll("_", " ");
+
+		sb.append("Developers | ");
+		sb.append(forPrintPageName);
+
+		if (relObj instanceof Article) {
+			Article article = (Article) relObj;
+
+			sb.insert(0, article.title + " | ");
+		}
+
+		return sb.toString();
 	}
 
 	private String getTitleBarContentByPageName(String pageName) {

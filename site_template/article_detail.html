@@ -30,22 +30,21 @@
 			<div class="article-detail__writer"><i class="fas fa-user-edit"></i>&nbsp;${article-detail__writer}</div>
 				<div class="article-detail__reg-date">${article-detail__reg-date}</div>
 				<div><i class="fas fa-eye"></i>&nbsp;${article-detail__view}</div>
+				<div><i class="fas fa-comments"></i>&nbsp;${article-detail__comment-count}</div>
 			</div>
-
+			${article-detail__link-youtube}
 			<div class="article-detail__body main-font">${article-detail__body}</div>
-			
-			${article-detail__body-youtube}
 			
 			<div class="article-detail__reply-box">
 				<div id="disqus_thread"></div>
 				<script>
-					(function() { // DON'T EDIT BELOW THIS LINE
-						var d = document, s = d.createElement('script');
-						s.src = 'https://custom-blog.disqus.com/embed.js';
-						s.setAttribute('data-timestamp', +new Date());
-						(d.head || d.body).appendChild(s);
-					})();
-				</script>
+				(function() { // DON'T EDIT BELOW THIS LINE
+					var d = document, s = d.createElement('script');
+					s.src = 'https://custom-blog.disqus.com/embed.js';
+					s.setAttribute('data-timestamp', +new Date());
+					(d.head || d.body).appendChild(s);
+				})();
+			</script>
 				<noscript>
 					Please enable JavaScript to view the <a
 						href="https://disqus.com/?ref_noscript">comments powered by
