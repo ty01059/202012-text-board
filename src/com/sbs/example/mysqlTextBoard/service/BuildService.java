@@ -229,7 +229,9 @@ public class BuildService {
 				body = body.replace("${article-detail__reg-date}", article.regDate);
 				body = body.replace("${article-detail__writer}", article.extra__writer);
 				body = body.replace("${article-detail__body}", article.body);
-				body = body.replace("${article-detail__view}", article.view + "");
+				body = body.replace("${article-detail__likes-count}", article.likesCount + "");
+				body = body.replace("${article-detail__comments-count}", article.commentsCount + "");
+				
 				body = body.replace("${article-detail__link-prev-article-url}", getArticleDetailFileName(prevArticleId));
 				body = body.replace("${article-detail__link-prev-article-title-attr}", prevArticle != null ? prevArticle.title : "");
 				body = body.replace("${article-detail__link-prev-article-class-addi}", prevArticleId == 0 ? "a-pointer-events-none" : "");
@@ -240,7 +242,6 @@ public class BuildService {
 				body = body.replace("${article-detail__link-next-article-title-attr}", nextArticle != null ? nextArticle.title : "");
 				body = body.replace("${article-detail__link-next-article-class-addi}", nextArticleId == 0 ? "a-pointer-events-none" : "");
 				body = body.replace("${article-detail__link-youtube}", article.extra__boardCode.equals("free") ? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" : "");
-				body = body.replace("${article-detail__comment-count}", 1 + "");
 				
 				body = body.replace("${site-domain}", "blog.yhj.kr");
 				body = body.replace("${file-name}", getArticleDetailFileName(article.id));
@@ -259,7 +260,7 @@ public class BuildService {
 		}
 	}
 
-	private String getArticleDetailFileName(int id) {
+	public String getArticleDetailFileName(int id) {
 		return "article_detail_" + id + ".html";
 	}
 	

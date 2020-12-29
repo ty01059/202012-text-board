@@ -8,6 +8,7 @@ import com.sbs.example.mysqlTextBoard.controller.Controller;
 import com.sbs.example.mysqlTextBoard.controller.MemberController;
 import com.sbs.example.mysqlTextBoard.service.ArticleService;
 import com.sbs.example.mysqlTextBoard.service.BuildService;
+import com.sbs.example.mysqlTextBoard.service.DisqusApiService;
 import com.sbs.example.mysqlTextBoard.service.MemberService;
 import com.sbs.example.mysqlTextBoard.session.Session;
 
@@ -18,21 +19,24 @@ public class Container {
 	public static MemberService memberService;
 	public static ArticleService articleService;
 	public static BuildService buildService;
+	public static DisqusApiService disqusApiService;
 
 	public static Controller articleController;
 	public static Controller memberController;
 	public static Controller buildController;
 
 	public static Session session;
+	public static AppConfig config;
 
 	static {
 		scanner = new Scanner(System.in);
-
+		config = new AppConfig();
 		session = new Session();
 
 		memberService = new MemberService();
 		articleService = new ArticleService();
 		buildService = new BuildService();
+		disqusApiService = new DisqusApiService();
 
 		articleController = new ArticleController();
 		memberController = new MemberController();

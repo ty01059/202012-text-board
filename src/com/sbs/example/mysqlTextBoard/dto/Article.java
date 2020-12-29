@@ -10,7 +10,8 @@ public class Article {
 	public String body;
 	public int memberId;
 	public int boardId;
-	public int view;
+	public int likesCount;
+	public int commentsCount;
 
 	public String extra__writer;
 	public String extra__boardName;
@@ -24,7 +25,8 @@ public class Article {
 		this.body = (String) map.get("body");
 		this.memberId = (int) map.get("memberId");
 		this.boardId = (int) map.get("boardId");
-		this.view = (int) map.get("view");
+		this.likesCount = (int) map.get("likesCount");
+		this.commentsCount = (int) map.get("commentsCount");
 		
 		if (map.containsKey("extra__writer")) {
 			this.extra__writer = (String) map.get("extra__writer");
