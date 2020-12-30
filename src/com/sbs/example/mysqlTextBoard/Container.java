@@ -29,14 +29,14 @@ public class Container {
 	public static AppConfig config;
 
 	static {
-		scanner = new Scanner(System.in);
 		config = new AppConfig();
+		scanner = new Scanner(System.in);
 		session = new Session();
 
+		disqusApiService = new DisqusApiService();
 		memberService = new MemberService();
 		articleService = new ArticleService();
 		buildService = new BuildService();
-		disqusApiService = new DisqusApiService();
 
 		articleController = new ArticleController();
 		memberController = new MemberController();

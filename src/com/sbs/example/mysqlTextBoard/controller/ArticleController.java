@@ -144,7 +144,7 @@ public class ArticleController extends Controller {
 
 		articleService.modify(inputedId, title, body);
 
-		System.out.printf("%d번 게시물을 생성하였습니다.\n", inputedId);
+		System.out.printf("%d번 게시물을 수정하였습니다.\n", inputedId);
 	}
 
 	private void doWrite(String cmd) {

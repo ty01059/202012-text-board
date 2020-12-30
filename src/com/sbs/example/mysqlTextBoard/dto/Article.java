@@ -44,8 +44,8 @@ public class Article {
 	@Override
 	public String toString() {
 		return "Article [id=" + id + ", regDate=" + regDate + ", updateDate=" + updateDate + ", title=" + title
-				+ ", body=" + body + ", memberId=" + memberId + ", boardId=" + boardId + ", extra__writer="
-				+ extra__writer + ", extra__boardName=" + extra__boardName + ", extra__boardCode=" + extra__boardCode
-				+ "]";
+				+ ", body=" + body + ", memberId=" + memberId + ", boardId=" + boardId + ", likesCount=" + likesCount
+				+ ", commentsCount=" + commentsCount + ", extra__writer=" + extra__writer + ", extra__boardName="
+				+ extra__boardName + ", extra__boardCode=" + extra__boardCode + "]";
 	}
 }

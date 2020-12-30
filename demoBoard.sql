@@ -36,9 +36,9 @@ CREATE TABLE `article` (
 /*Data for the table `article` */
 
 INSERT  INTO `article`(`id`,`regDate`,`updateDate`,`title`,`body`,`memberId`,`boardId`,`view`) VALUES 
-(1,'2020-12-18 13:32:10','2020-12-18 13:32:10','제목1??','내용1',1,2,0),
+(1,'2020-12-18 13:32:10','2020-12-18 13:32:10','제목1?','내용1',1,2,0),
 (2,'2020-12-18 13:32:10','2020-12-18 13:32:10','제목2','# 자바기본문법\r\n```java\r\nint a = 10;\r\nint b = 20;\r\nint c = a + b;\r\n```',1,2,0),
-(3,'2020-12-18 13:32:10','2020-12-18 13:32:10','제목3??','# 공지사항\r\n안녕하세요.\r\n이 사이트는 저의 글 연재 공간입니다.\r\n\r\n---\r\n\r\n# 이 사이트의 특징\r\n- A\r\n- B\r\n- C',1,1,0),
+(3,'2020-12-18 13:32:10','2020-12-18 13:32:10','제목3?','# 공지사항\r\n안녕하세요.\r\n이 사이트는 저의 글 연재 공간입니다.\r\n\r\n---\r\n\r\n# 이 사이트의 특징\r\n- A\r\n- B\r\n- C',1,1,0),
 (4,'2020-12-18 13:32:10','2020-12-18 13:32:10','1강, Class','# Class\r\n- 클래스란 유사한 기능을 가진 객체들의 속성을 묶어놓은 집합체\r\n- java 기초\r\n\r\n# Main 클래스 예시\r\n```\r\n public class Main {\r\n   public static void main(Strings[] args) {\r\n      int i=1;\r\n      String str=\'string\';\r\n  }\r\n}\r\n```\r\n\r\n# 클래스 접근 제어자\r\n```\r\n - public : public 가 붙은 변수, 메소드는 어떤 클래스에서라도 접근이 가능합니다. \r\n - private : 해당 클래스만 접근이 가능합니다. \r\n - protected : protected 가 붙은 변수, 메소드는 동일 패키지내의 클래스 또는 해당 클래스를 상속 받는 외부 패키지의 클래스에서 접근이 가능합니다.\r\n```',1,3,0),
 (5,'2020-12-18 13:32:10','2020-12-18 13:32:10','2강, Variable(1)','# Variable\r\n- 변수 선언\r\n- 변수에 이름을 정해 값을 저장할 수 있는 메모리 공간을 생성\r\n- 데이터 타입에 따라서 변수의 크기가 달라진다.\r\n\r\n# 변수의 타입\r\n\r\n ## 숫자형\r\n```\r\n1)정수형\r\n - byte\r\n - short\r\n - int\r\n - long\r\n 2)실수형\r\n - float\r\n - double\r\n```\r\n## 논리형\r\n```\r\n - boolean : true, false\r\n```\r\n## 문자형\r\n```\r\n - char : \'a\', \'b\' ... \r\n```\r\n## 문자열\r\n```\r\n - String : \'abc\' ...\r\n```\r\n\r\n# 예시\r\n# ',1,3,0),
 (6,'2020-12-22 08:51:00','2020-12-22 08:51:00','3강, Variable(2)','# Variable\r\n- 변수 선언\r\n- 변수들의 집합\r\n\r\n# 배열의 종류\r\n\r\n ## Array\r\n```\r\n- 변수를 선언하면서 크기를 지정해주어야 한다.\r\n- 한번 배열을 선언하면 크기를 변경할 수 없다.\r\n\r\nex)\r\n// 선언\r\nint[] i = new int[10];\r\nString[] str = new String[10];\r\n// 추출\r\nint[1];\r\nString[2];\r\n```\r\n## List\r\n```\r\n- 변수 선언하면서 크기를 지정해주지 않아도 된다.\r\n- 값의 크기가 변하는 경우 사용\r\n\r\nex)\r\nimport java.util.ArrayList;\r\nArrayList<Integer> list = new ArrayList<Integer>();\r\n\r\n// 값 추가\r\nlist.add(1);\r\nlist.add(2);\r\nlist.add(3); // list = {1,2,3}\r\n\r\n// 값 추출\r\nlist.get(0); // 1\r\n\r\n// List크기를 반환\r\nlist.size(); // 3\r\n\r\n// 값이 있는지 확인\r\nlist.contains(2); // true\r\n\r\n// 값 제거\r\nlist.remove(0); // list = {2,3}\r\n```\r\n## Map\r\n```\r\n- (key, value)로 값을 저장한다.\r\n- index에 제한받지 않고 값을 찾거나 저장할 수 있다.\r\n\r\nex)\r\nimport java.util.Map;\r\nimport java.util.HashMap;\r\nHashMap<dataType, dataType> map = new HashMap<dataType, dataType>();\r\n\r\n// 값 저장\r\nmap.put(\"key\", \"value\"); // map = {\"key\" : \"value\"}\r\n\r\n// 값 추출\r\nmap.get(\"key\"); // \"value\"\r\n\r\n// 값을 확인\r\nmap.containsKey(\"key\"); // true\r\n\r\n// 값을 제거\r\nmap.remove(\"key\");\r\n\r\n// 크기 반환\r\nmap.size(); // 1\r\n```',1,3,0),
@@ -63,7 +63,8 @@ CREATE TABLE `board` (
 INSERT  INTO `board`(`id`,`regDate`,`updateDate`,`name`,`code`) VALUES 
 (1,'2020-12-18 13:32:10','2020-12-18 13:32:10','공지사항','notice'),
 (2,'2020-12-18 13:32:10','2020-12-18 13:32:10','자유','free'),
-(3,'2020-12-18 13:32:10','2020-12-18 13:32:10','JAVA','it');
+(3,'2020-12-18 13:32:10','2020-12-18 13:32:10','JAVA','java'),
+(4,'2020-12-18 13:32:10','2020-12-18 13:32:10','JSP','jsp');
 
 /*Table structure for table `member` */
 

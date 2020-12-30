@@ -1,6 +1,8 @@
 package com.sbs.example.mysqlTextBoard.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sbs.example.mysqlTextBoard.Container;
 import com.sbs.example.mysqlTextBoard.dto.Article;
@@ -10,11 +12,11 @@ import com.sbs.example.mysqlTextBoard.util.Util;
 public class BuildService {
 
 	private ArticleService articleService;
-	private MemberService memberService;
+	private DisqusApiService disqusApiService;
 
 	public BuildService() {
 		articleService = Container.articleService;
-		memberService = Container.memberService;
+		disqusApiService = Container.disqusApiService;
 	}
 
 	public void buildSite() {
@@ -25,9 +27,31 @@ public class BuildService {
 		Util.copy("site_template/app.js", "site/app.js");
 		Util.copy("site_template/favicon.ico", "site/favicon.ico");
 
+		loadDisqusData();
+		
 		buildIndexPage();
 		buildArticleListPages();
 		buildArticleDetailPages();
+	}
+
+	private void loadDisqusData() {
+		List<Article> articles = articleService.getForPrintArticles();
+
+		for (Article article : articles) {
+			Map<String, Object> disqusArticleData = disqusApiService.getArticleData(article);
+
+			if (disqusArticleData != null) {
+				int likesCount = (int) disqusArticleData.get("likesCount");
+				int commentsCount = (int) disqusArticleData.get("commentsCount");
+
+				Map<String, Object> modifyArgs = new HashMap<>();
+				modifyArgs.put("id", article.id);
+				modifyArgs.put("likesCount", likesCount);
+				modifyArgs.put("commentsCount", commentsCount);
+
+				articleService.modify(modifyArgs);
+			}
+		}
 	}
 
 	private void buildArticleListPage(Board board, int itemsInAPage, int pageBoxSize, List<Article> articles,
@@ -205,17 +229,17 @@ public class BuildService {
 				Article prevArticle = null;
 				int prevArticleIndex = i + 1;
 				int prevArticleId = 0;
-				
-				if ( prevArticleIndex < articles.size() ) {
+
+				if (prevArticleIndex < articles.size()) {
 					prevArticle = articles.get(prevArticleIndex);
 					prevArticleId = prevArticle.id;
 				}
-				
+
 				Article nextArticle = null;
 				int nextArticleIndex = i - 1;
 				int nextArticleId = 0;
-				
-				if ( nextArticleIndex >= 0 ) {
+
+				if (nextArticleIndex >= 0) {
 					nextArticle = articles.get(nextArticleIndex);
 					nextArticleId = nextArticle.id;
 				}
@@ -223,7 +247,7 @@ public class BuildService {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(head);
-				
+
 				String body = bodyTemplate.replace("${article-detail__title}", article.title);
 				body = body.replace("${article-detail__board-name}", article.extra__boardName);
 				body = body.replace("${article-detail__reg-date}", article.regDate);
@@ -231,21 +255,29 @@ public class BuildService {
 				body = body.replace("${article-detail__body}", article.body);
 				body = body.replace("${article-detail__likes-count}", article.likesCount + "");
 				body = body.replace("${article-detail__comments-count}", article.commentsCount + "");
-				
-				body = body.replace("${article-detail__link-prev-article-url}", getArticleDetailFileName(prevArticleId));
-				body = body.replace("${article-detail__link-prev-article-title-attr}", prevArticle != null ? prevArticle.title : "");
-				body = body.replace("${article-detail__link-prev-article-class-addi}", prevArticleId == 0 ? "a-pointer-events-none" : "");
+
+				body = body.replace("${article-detail__link-prev-article-url}",
+						getArticleDetailFileName(prevArticleId));
+				body = body.replace("${article-detail__link-prev-article-title-attr}",
+						prevArticle != null ? prevArticle.title : "");
+				body = body.replace("${article-detail__link-prev-article-class-addi}",
+						prevArticleId == 0 ? "a-pointer-events-none" : "");
 				body = body.replace("${article-detail__link-list-url}",
 						getArticleListFileName(article.extra__boardCode, 1));
 				body = body.replace("${article-detail__link-list-class-addi}", "");
-				body = body.replace("${article-detail__link-next-article-url}", getArticleDetailFileName(nextArticleId));
-				body = body.replace("${article-detail__link-next-article-title-attr}", nextArticle != null ? nextArticle.title : "");
-				body = body.replace("${article-detail__link-next-article-class-addi}", nextArticleId == 0 ? "a-pointer-events-none" : "");
-				body = body.replace("${article-detail__link-youtube}", article.extra__boardCode.equals("free") ? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" : "");
-				
+				body = body.replace("${article-detail__link-next-article-url}",
+						getArticleDetailFileName(nextArticleId));
+				body = body.replace("${article-detail__link-next-article-title-attr}",
+						nextArticle != null ? nextArticle.title : "");
+				body = body.replace("${article-detail__link-next-article-class-addi}",
+						nextArticleId == 0 ? "a-pointer-events-none" : "");
+				body = body.replace("${article-detail__link-youtube}", article.extra__boardCode.equals("free")
+						? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+						: "");
+
 				body = body.replace("${site-domain}", "blog.yhj.kr");
 				body = body.replace("${file-name}", getArticleDetailFileName(article.id));
-				
+
 				sb.append(body);
 
 				sb.append(foot);
@@ -263,7 +295,7 @@ public class BuildService {
 	public String getArticleDetailFileName(int id) {
 		return "article_detail_" + id + ".html";
 	}
-	
+
 	private String getHeadHtml(String pageName) {
 		return getHeadHtml(pageName, null);
 	}
@@ -289,7 +321,7 @@ public class BuildService {
 		}
 
 		head = head.replace("${menu-bar__menu-1__board-menu-content}", boardMenuContentHtml.toString());
-		
+
 		String titleBarContentHtml = getTitleBarContentByPageName(pageName);
 
 		head = head.replace("${title-bar__content}", titleBarContentHtml);
@@ -298,16 +330,16 @@ public class BuildService {
 
 		head = head.replace("${page-title}", pageTitle);
 
-		String siteName = "DevelopersBlog";
+		String siteName = Container.config.getSiteName();
 		String siteSubject = "개발자의 기술/일상 블로그";
 		String siteDescription = "개발자의 기술/일상 관련 글들을 공유합니다.";
 		String siteKeywords = "HTML, CSS, JAVASCRIPT, JAVA, SPRING, MySQL, 리눅스, 리액트";
 		String siteDomain = "blog.yhj.kr";
 		String siteMainUrl = "https://" + siteDomain;
 		String currentDate = Util.getNowDateStr().replace(" ", "T");
-		
-		if ( relObj instanceof Article ) {
-			Article article = (Article)relObj;
+
+		if (relObj instanceof Article) {
+			Article article = (Article) relObj;
 			siteSubject = article.title;
 			siteDescription = article.body;
 			siteDescription = siteDescription.replaceAll("[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]", "");
@@ -326,7 +358,7 @@ public class BuildService {
 
 		return head;
 	}
-	
+
 	private String getPageTitle(String pageName, Object relObj) {
 		StringBuilder sb = new StringBuilder();
 
@@ -339,7 +371,7 @@ public class BuildService {
 		forPrintPageName = forPrintPageName.toUpperCase();
 		forPrintPageName = forPrintPageName.replaceAll("_", " ");
 
-		sb.append("Developers | ");
+		sb.append(Container.config.getSiteName() + " | ");
 		sb.append(forPrintPageName);
 
 		if (relObj instanceof Article) {
@@ -360,10 +392,10 @@ public class BuildService {
 			return "<i class=\"fab fa-free-code-camp\"></i> <span>FREE LIST</span>";
 		} else if (pageName.startsWith("article_list_notice")) {
 			return "<i class=\"fas fa-flag\"></i> <span>NOTICE LIST</span>";
-		} else if (pageName.startsWith("article_list_it")) {
-			return "<i class=\"fas fa-flag\"></i> <span>IT LIST</span>";
-		} else if (pageName.startsWith("article_list_")) {
-			return "<i class=\"fas fa-clipboard-list\"></i> <span>NOTICE LIST</span>";
+		} else if (pageName.startsWith("article_list_java")) {
+			return "<i class=\"fas fa-flag\"></i> <span>JAVA LIST</span>";
+		} else if (pageName.startsWith("article_list_jsp")) {
+			return "<i class=\"fas fa-clipboard-list\"></i> <span>JSP LIST</span>";
 		}
 
 		return "";
