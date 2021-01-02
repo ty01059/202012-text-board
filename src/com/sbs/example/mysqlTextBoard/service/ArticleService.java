@@ -79,4 +79,8 @@ public class ArticleService {
 	public int getArticlesCount(int boardId) {
 		return articleDao.getArticlesCount(boardId);
 	}
+	
+	public void updatePageHits() {
+		articleDao.updatePageHits();
+	}
 }

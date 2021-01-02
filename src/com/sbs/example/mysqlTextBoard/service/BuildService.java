@@ -27,31 +27,20 @@ public class BuildService {
 		Util.copy("site_template/app.js", "site/app.js");
 		Util.copy("site_template/favicon.ico", "site/favicon.ico");
 
-		loadDisqusData();
+		loadDataFromDisqus();
+		loadDataFromGa4Data();
 		
 		buildIndexPage();
 		buildArticleListPages();
 		buildArticleDetailPages();
 	}
 
-	private void loadDisqusData() {
-		List<Article> articles = articleService.getForPrintArticles();
-
-		for (Article article : articles) {
-			Map<String, Object> disqusArticleData = disqusApiService.getArticleData(article);
-
-			if (disqusArticleData != null) {
-				int likesCount = (int) disqusArticleData.get("likesCount");
-				int commentsCount = (int) disqusArticleData.get("commentsCount");
-
-				Map<String, Object> modifyArgs = new HashMap<>();
-				modifyArgs.put("id", article.id);
-				modifyArgs.put("likesCount", likesCount);
-				modifyArgs.put("commentsCount", commentsCount);
-
-				articleService.modify(modifyArgs);
-			}
-		}
+	private void loadDataFromGa4Data() {
+		Container.googleAnalyticsApiService.updatePageHits();
+	}
+	
+	private void loadDataFromDisqus() {
+		Container.disqusApiService.updateArticleCounts();
 	}
 
 	private void buildArticleListPage(Board board, int itemsInAPage, int pageBoxSize, List<Article> articles,
@@ -84,6 +73,7 @@ public class BuildService {
 			mainContent.append("<div class=\"article-list__cell-reg-date\">" + article.regDate + "</div>");
 			mainContent.append("<div class=\"article-list__cell-writer\">" + article.extra__writer + "</div>");
 			mainContent.append("<div class=\"article-list__cell-title\">");
+			mainContent.append("<div class=\"article-list__cell-view\">" + article.viewCount + "</div>");
 
 			mainContent.append("<a href=\"" + link + "\" class=\"hover-underline\">" + article.title + "</a>");
 
@@ -255,6 +245,7 @@ public class BuildService {
 				body = body.replace("${article-detail__body}", article.body);
 				body = body.replace("${article-detail__likes-count}", article.likesCount + "");
 				body = body.replace("${article-detail__comments-count}", article.commentsCount + "");
+				body = body.replace("${article-detail__view-count}", article.viewCount + "");
 
 				body = body.replace("${article-detail__link-prev-article-url}",
 						getArticleDetailFileName(prevArticleId));

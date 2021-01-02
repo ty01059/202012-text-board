@@ -12,4 +12,24 @@ public class AppConfig {
 	public String getDisqusForumName() {
 		return "custom-blog";
 	}
+	
+	public String getGa4PropertyId() {
+		return "256604603";
+	}
+	
+	public String getDbHost() {
+		return "127.0.0.1";
+	}
+
+	public String getDbId() {
+		return "sbsblog";
+	}
+
+	public String getDbPw() {
+		return "sbs123";
+	}
+
+	public String getDbName() {
+		return "demoBoard";
+	}
 }

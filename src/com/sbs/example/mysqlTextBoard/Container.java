@@ -9,6 +9,7 @@ import com.sbs.example.mysqlTextBoard.controller.MemberController;
 import com.sbs.example.mysqlTextBoard.service.ArticleService;
 import com.sbs.example.mysqlTextBoard.service.BuildService;
 import com.sbs.example.mysqlTextBoard.service.DisqusApiService;
+import com.sbs.example.mysqlTextBoard.service.GoogleAnalyticsApiService;
 import com.sbs.example.mysqlTextBoard.service.MemberService;
 import com.sbs.example.mysqlTextBoard.session.Session;
 
@@ -20,6 +21,7 @@ public class Container {
 	public static ArticleService articleService;
 	public static BuildService buildService;
 	public static DisqusApiService disqusApiService;
+	public static GoogleAnalyticsApiService googleAnalyticsApiService;
 
 	public static Controller articleController;
 	public static Controller memberController;
@@ -33,6 +35,7 @@ public class Container {
 		scanner = new Scanner(System.in);
 		session = new Session();
 
+		googleAnalyticsApiService = new GoogleAnalyticsApiService();
 		disqusApiService = new DisqusApiService();
 		memberService = new MemberService();
 		articleService = new ArticleService();
