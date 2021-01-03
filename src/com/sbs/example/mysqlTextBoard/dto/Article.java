@@ -47,7 +47,7 @@ public class Article {
 	public String toString() {
 		return "Article [id=" + id + ", regDate=" + regDate + ", updateDate=" + updateDate + ", title=" + title
 				+ ", body=" + body + ", memberId=" + memberId + ", boardId=" + boardId + ", likesCount=" + likesCount
-				+ ", commentsCount=" + commentsCount + ", hitCount=" + hitCount + ", extra__writer=" + extra__writer
+				+ ", commentsCount=" + commentsCount + ", hitCount=" + viewCount + ", extra__writer=" + extra__writer
 				+ ", extra__boardName=" + extra__boardName + ", extra__boardCode=" + extra__boardCode + "]";
 	}
 }

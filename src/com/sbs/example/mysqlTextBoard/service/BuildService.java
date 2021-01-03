@@ -73,7 +73,6 @@ public class BuildService {
 			mainContent.append("<div class=\"article-list__cell-reg-date\">" + article.regDate + "</div>");
 			mainContent.append("<div class=\"article-list__cell-writer\">" + article.extra__writer + "</div>");
 			mainContent.append("<div class=\"article-list__cell-title\">");
-			mainContent.append("<div class=\"article-list__cell-view\">" + article.viewCount + "</div>");
 
 			mainContent.append("<a href=\"" + link + "\" class=\"hover-underline\">" + article.title + "</a>");
 

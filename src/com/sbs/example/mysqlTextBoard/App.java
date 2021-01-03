@@ -12,8 +12,8 @@ public class App {
 		while (true) {
 			System.out.printf("명령어 : ");
 			String cmd = sc.nextLine();
-
-			MysqlUtil.setDBInfo("127.0.0.1", "sbsblog", "sbs123", "demoBoard");
+			
+			MysqlUtil.setDBInfo(Container.config.getDbHost(), Container.config.getDbId(), Container.config.getDbPw(), Container.config.getDbName());
 
 			boolean needToExit = false;
 
