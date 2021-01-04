@@ -192,10 +192,10 @@ a {
 }
 
 .menu-bar__menu-1>ul ul {
-	/* display: none; */
-	visibility: hidden;
+	display: none;
+	/* visibility: hidden;
     height: 0;
-    transition: height 1s;
+    transition: height 1s; */
 	position: absolute;
 	top: 100%;
 	left: -10px;
@@ -208,9 +208,9 @@ a {
 }
 
 .menu-bar__menu-1>ul>li:hover>ul {
-	/* display: block; */
-	visibility: visible;
-    height: 168px;
+	display: block;
+	/* visibility: visible; 
+    height: 168px; */
 }
 
 .menu-bar__menu-1>ul ul>li:last-child>a {
