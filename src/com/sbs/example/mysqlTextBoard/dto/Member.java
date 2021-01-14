@@ -3,12 +3,12 @@ package com.sbs.example.mysqlTextBoard.dto;
 import java.util.Map;
 
 public class Member {
-	public int id;
-	public String regDate;
-	public String updateDate;
-	public String loginId;
-	public String loginPw;
-	public String name;
+	private int id;
+	private String regDate;
+	private String updateDate;
+	private String loginId;
+	private String loginPw;
+	private String name;
 
 	public Member(Map<String, Object> map) {
 		this.id = (int) map.get("id");
@@ -21,8 +21,7 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", regDate=" + regDate + ", updateDate=" + updateDate + ", loginId=" + loginId
-				+ ", loginPw=" + loginPw + ", name=" + name + "]";
+		return "Member [id=" + id + ", regDate=" + regDate + ", updateDate=" + updateDate + ", loginId=" + loginId + ", loginPw=" + loginPw + ", name=" + name + "]";
 	}
 
 	public String getType() {
@@ -31,6 +30,54 @@ public class Member {
 
 	public boolean isAdmin() {
 		return loginId.equals("test1");
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+
+	public String getLoginPw() {
+		return loginPw;
+	}
+
+	public void setLoginPw(String loginPw) {
+		this.loginPw = loginPw;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

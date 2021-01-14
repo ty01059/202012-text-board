@@ -5,6 +5,8 @@ $.get(
 	{},
 	function(data) {
 		data.forEach((row, index) => {
+			console.log(row);
+
 			const article = {
 				id: row.id,
 				regDate: row.regDate,
