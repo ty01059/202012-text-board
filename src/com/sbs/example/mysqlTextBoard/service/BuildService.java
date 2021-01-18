@@ -237,12 +237,15 @@ public class BuildService {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(head);
+				
+				String articleBodyForPrint = article.getBody();
+				articleBodyForPrint = articleBodyForPrint.replaceAll("script", "t-script");
 
 				String body = bodyTemplate.replace("${article-detail__title}", article.getTitle());
 				body = body.replace("${article-detail__board-name}", article.getExtra__boardName());
 				body = body.replace("${article-detail__reg-date}", article.getRegDate());
 				body = body.replace("${article-detail__writer}", article.getExtra__writer());
-				body = body.replace("${article-detail__body}", article.getBody());
+				body = body.replace("${article-detail__body}", articleBodyForPrint);
 				body = body.replace("${article-detail__likes-count}", article.getLikesCount() + "");
 				body = body.replace("${article-detail__comments-count}", article.getCommentsCount() + "");
 				body = body.replace("${article-detail__view-count}", article.getViewCount() + "");

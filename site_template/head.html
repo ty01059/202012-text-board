@@ -22,7 +22,7 @@
 <!-- 메타태그정보 //-->
 <!-- META -->
 <link rel="canonical" href="${site-main-url}" />
-<meta name="subject" content="${site-subject}" />
+<meta name="subject" content="${site-subject}"/>
 <meta name="title" content="${site-name}" />
 <meta name="keywords" content="${site-keywords}" />
 <meta name="copyright" content="${site-name}" />
@@ -34,12 +34,11 @@
 <meta property="og:title" content="${site-subject}" />
 <meta property="og:description" content="${site-description}" />
 <meta property="og:locale" content="ko_KR" />
-<meta property="og:image"
-	content="https://image.freepik.com/free-photo/office-table-with-cup-of-coffee-keyboard-and-notepad_1220-4584.jpg" />
+<meta property="og:image" content="${site-main-url}/img/logo/logo_opengraph.png" />
 <meta property="og:image:alt" content="${site-domain}" />
 <meta property="og:image:width" content="486" />
 <meta property="og:image:height" content="254" />
-<meta property="og:updated_time" content="${current-date}" />
+<meta property="og:updated_time" content="${current-date}"/>
 <meta property="og:pubdate" content="${current-date}" />
 <meta property="og:url" content="${site-main-url}" />
 <!-- TWITTER -->
@@ -68,6 +67,30 @@
 <link rel="icon" href="favicon.ico" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/highlight.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css">
+
+<!-- 토스트 UI 에디터, 자바스크립트 코어 -->
+<script
+	src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js" defer></script>
+
+<!-- 코드 미러 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.css" />
+<!-- 토스트 UI 에디터, CSS 코어 -->
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+<!-- 토스트 UI 에디터, 신택스 하이라이트 플러그인 추가 -->
+<script
+	src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js" defer></script>
+
+<link rel="stylesheet" href="app.css" />
+<script src="app.js" defer></script>
 
 </head>
 <body>
