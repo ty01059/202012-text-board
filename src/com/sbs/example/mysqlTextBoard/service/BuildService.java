@@ -385,7 +385,6 @@ public class BuildService {
 
 		String head = getHeadHtml("article_search");
 		String foot = Util.getFileContents("site_template/foot.html");
-
 		String html = Util.getFileContents("site_template/article_search.html");
 
 		sb.append(head);

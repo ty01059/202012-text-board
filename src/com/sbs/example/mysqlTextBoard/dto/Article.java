@@ -28,7 +28,7 @@ public class Article {
 		this.boardId = (int) map.get("boardId");
 		this.likesCount = (int) map.get("likesCount");
 		this.commentsCount = (int) map.get("commentsCount");
-		this.viewCount = (int) map.get("hitCount");
+		this.viewCount = (int) map.get("view");
 
 		if (map.containsKey("extra__writer")) {
 			this.extra__writer = (String) map.get("extra__writer");

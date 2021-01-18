@@ -4,7 +4,7 @@ $.get(
 	'article_list.json',
 	{},
 	function(data) {
-		data.forEach((row, index) => {
+		data.forEach((row) => {
 			console.log(row);
 
 			const article = {
