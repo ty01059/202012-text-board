@@ -14,7 +14,9 @@
 				<div><i class="fas fa-comments"></i>&nbsp;${article-detail__comments-count}</div>
 			</div>
 			${article-detail__link-youtube}
-			<div class="article-detail__body main-font">${article-detail__body}</div>
+			
+			<script type="text/x-template">${article-detail__body}</script>
+			<div class="article-detail__body main-font toast-ui-viewer"></div>
 			
 			<div class="article-detail__reply-box">
 				<div id="disqus_thread"></div>
@@ -25,7 +27,7 @@
 			    };
 				(function() { // DON'T EDIT BELOW THIS LINE
 					var d = document, s = d.createElement('script');
-					s.src = 'https://custom-blog.disqus.com/embed.js';
+					s.src = 'https://my-ssg.disqus.com/embed.js';
 					s.setAttribute('data-timestamp', +new Date());
 					(d.head || d.body).appendChild(s);
 				})();

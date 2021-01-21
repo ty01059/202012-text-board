@@ -271,6 +271,9 @@ public class BuildService {
 
 				body = body.replace("${site-domain}", "blog.yhj.kr");
 				body = body.replace("${file-name}", getArticleDetailFileName(article.getId()));
+				
+				// JSP 개발 일지 영상
+				body = body.replace("${JSPCommunity_dev_1}", "-SoWYUaVeAo");
 
 				sb.append(body);
 

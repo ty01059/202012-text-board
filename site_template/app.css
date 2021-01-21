@@ -328,7 +328,7 @@ a {
 	padding: 7px;
 }
 
-.article-page-menu>ul>li:not (:first-child ):not (:last-child ) >a {
+.article-page-menu>ul>li:not(:first-child ):not(:last-child ) >a {
 	border: 1px solid transparent;
 	padding-left: 0;
 	padding-right: 0;
@@ -336,7 +336,7 @@ a {
 	justify-content: center;
 }
 
-.article-page-menu>ul>li:not (:first-child ):not (:last-child ):hover>a
+.article-page-menu>ul>li:not(:first-child ):not(:last-child ):hover>a
 	{
 	border-color: #afafaf;
 }
@@ -394,3 +394,9 @@ a {
     padding: 0px 20px;
 }
 /* 배경이미지 끝 */
+
+/* vue 시작 */
+[v-cloak] {
+	display:none;
+}
+/* vue 끝 */
