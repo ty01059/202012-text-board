@@ -274,6 +274,7 @@ public class BuildService {
 				
 				// JSP 개발 일지 영상
 				body = body.replace("${JSPCommunity_dev_1}", "-SoWYUaVeAo");
+				body = body.replace("${JSPCommunity_dev_2}", "p9v_xqM2Y_I");
 
 				sb.append(body);
 
