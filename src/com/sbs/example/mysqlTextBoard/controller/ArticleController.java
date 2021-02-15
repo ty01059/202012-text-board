@@ -61,7 +61,7 @@ public class ArticleController extends Controller {
 			System.out.println("코드를 잘 못 입력하였습니다.");
 			return;
 		}
-		
+
 		Container.session.setCurrentBoardCode(board.getCode());
 
 		System.out.printf("%s 게시판으로 변경합니다.\n", board.getName());

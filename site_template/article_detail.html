@@ -1,40 +1,39 @@
 <section class="section-1 con-min-width">
 	<div class="con">
 		<div class="article-detail">
-			<div class="article-detail__main-info flex">
-				<h3 class="article-detail__board-name">[${article-detail__board-name} 게시판] &nbsp;</h3>
-				<h2 class="article-detail__title"> ${article-detail__title}</h2>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<div><i class="fas fa-eye"></i>&nbsp;${article-detail__view-count}</div>
-			</div>
+			<h2 class="article-detail__title">${article-detail__title}</h2>
+
 			<div class="article-detail__sub-info flex">
-			<div class="article-detail__writer"><i class="fas fa-user-edit"></i>&nbsp;${article-detail__writer}</div>
+				<div class="article-detail__board-name">${article-detail__board-name}</div>
 				<div class="article-detail__reg-date">${article-detail__reg-date}</div>
-				<div><i class="fas fa-heart"></i>&nbsp;${article-detail__likes-count}</div>
-				<div><i class="fas fa-comments"></i>&nbsp;${article-detail__comments-count}</div>
+				<div class="article-detail__writer">${article-detail__writer}</div>
+				<div class="article-detail__hit-count">조회수 : ${article-detail__hit-count}</div>
+				<div class="article-detail__likes-count">추천수 : ${article-detail__likes-count}</div>
+				<div class="article-detail__comments-count">댓글수 : ${article-detail__comments-count}</div>
 			</div>
-			${article-detail__link-youtube}
-			
-			<script type="text/x-template">${article-detail__body}</script>
+
+			<script type="text/x-template">
+${article-detail__body}
+			</script>
 			<div class="article-detail__body main-font toast-ui-viewer"></div>
-			
+
 			<div class="article-detail__reply-box">
 				<div id="disqus_thread"></div>
 				<script>
-				var disqus_config = function () {
-			        this.page.url = 'https://${site-domain}/${file-name}';
-			        this.page.identifier = '${file-name}';
-			    };
-				(function() { // DON'T EDIT BELOW THIS LINE
-					var d = document, s = d.createElement('script');
-					s.src = 'https://my-ssg.disqus.com/embed.js';
-					s.setAttribute('data-timestamp', +new Date());
-					(d.head || d.body).appendChild(s);
-				})();
-			</script>
+					var disqus_config = function () {
+				        this.page.url = 'https://${site-domain}/${file-name}';
+				        this.page.identifier = '${file-name}';
+				    };
+					(function() { // DON'T EDIT BELOW THIS LINE
+						var d = document, s = d.createElement('script');
+						s.src = 'https://my-ssg.disqus.com/embed.js';
+						s.setAttribute('data-timestamp', +new Date());
+						(d.head || d.body).appendChild(s);
+					})();
+				</script>
 				<noscript>
-					Please enable JavaScript to view the <a
-						href="https://disqus.com/?ref_noscript">comments powered by
+					Please enable JavaScript to view the
+					<a href="https://disqus.com/?ref_noscript">comments powered by
 						Disqus.</a>
 				</noscript>
 			</div>
@@ -42,15 +41,15 @@
 			<div class="article-detail__menu flex">
 				<a title="${article-detail__link-prev-article-title-attr}"
 					href="${article-detail__link-prev-article-url}"
-					class="${article-detail__link-prev-article-class-addi}">&lt;
-					이전글</a> <a href="${article-detail__link-list-url}"
-					class="${article-detail__link-list-class-addi}">목록</a>
+					class="hover-underline ${article-detail__link-prev-article-class-addi}">&lt;
+					이전글</a>
+				<a href="${article-detail__link-list-url}"
+					class="hover-underline ${article-detail__link-list-class-addi}">목록</a>
 				<a title="${article-detail__link-next-article-title-attr}"
 					href="${article-detail__link-next-article-url}"
-					class="${article-detail__link-next-article-class-addi}">다음글
+					class="hover-underline ${article-detail__link-next-article-class-addi}">다음글
 					&gt;</a>
 			</div>
 		</div>
 	</div>
 </section>
-</div>

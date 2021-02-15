@@ -17,10 +17,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sbs.example.mysqlTextBoard.dto.Article;
 
 public class Util {
 	public static void mkdirs(String path) {
@@ -83,28 +85,46 @@ public class Util {
 
 	public static boolean copy(String sourcePath, String destPath) {
 		Path source = Paths.get(sourcePath);
-        Path target = Paths.get(destPath);
+		Path target = Paths.get(destPath);
 
-        if (!Files.exists(target.getParent())) {
-            try {
+		if (!Files.exists(target.getParent())) {
+			try {
 				Files.createDirectories(target.getParent());
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
 			}
-        }
+		}
 
-        try {
+		try {
 			Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			return true;
 		}
-        
-        return true;
+
+		return true;
 	}
-	
+
 	public static String getNowDateStr() {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+	}
+
+	public static void copyDir(String sourceDirectoryLocation, String destinationDirectoryLocation) {
+		rmdir(destinationDirectoryLocation);
+
+		try {
+			Files.walk(Paths.get(sourceDirectoryLocation)).forEach(source -> {
+				Path destination = Paths.get(destinationDirectoryLocation,
+						source.toString().substring(sourceDirectoryLocation.length()));
+				try {
+					Files.copy(source, destination);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static String callApi(String urlStr, String... args) {
@@ -160,7 +180,7 @@ public class Util {
 
 		return content.toString();
 	}
-	
+
 	public static Map<String, Object> callApiResponseToMap(String urlStr, String... args) {
 		String jsonString = callApi(urlStr, args);
 
@@ -188,7 +208,7 @@ public class Util {
 
 		return null;
 	}
-	
+
 	public static String getJsonText(Object obj) {
 		ObjectMapper mapper = new ObjectMapper();
 		String rs = "";

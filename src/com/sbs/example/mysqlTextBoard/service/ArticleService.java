@@ -1,18 +1,22 @@
 package com.sbs.example.mysqlTextBoard.service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sbs.example.mysqlTextBoard.Container;
 import com.sbs.example.mysqlTextBoard.dao.ArticleDao;
 import com.sbs.example.mysqlTextBoard.dto.Article;
 import com.sbs.example.mysqlTextBoard.dto.Board;
 
 public class ArticleService {
 	private ArticleDao articleDao;
+	private TagService tagService;
 
 	public ArticleService() {
 		articleDao = new ArticleDao();
+		tagService = Container.tagService;
 	}
 
 	public List<Article> getArticles() {
@@ -39,15 +43,11 @@ public class ArticleService {
 
 		return modify(modifyArgs);
 	}
-	
-	public int modify(Map<String, Object> args) {
-		return articleDao.modify(args);
-	}
 
 	public List<Article> getForPrintArticles(int boardId) {
 		return articleDao.getForPrintArticles(boardId);
 	}
-	
+
 	public List<Article> getForPrintArticles() {
 		return articleDao.getForPrintArticles(0);
 	}
@@ -79,8 +79,30 @@ public class ArticleService {
 	public int getArticlesCount(int boardId) {
 		return articleDao.getArticlesCount(boardId);
 	}
-	
+
+	public int modify(Map<String, Object> args) {
+		return articleDao.modify(args);
+	}
+
 	public void updatePageHits() {
 		articleDao.updatePageHits();
+	}
+
+	public Map<String, List<Article>> getArticlesByTagMap() {
+		Map<String, List<Article>> map = new LinkedHashMap<>();
+		
+		List<String> tagBodies = tagService.getDedupTagBodiesByRelTypeCode("article");
+		
+		for ( String tagBody : tagBodies ) {
+			List<Article> articles = getForPrintArticlesByTag(tagBody);
+			
+			map.put(tagBody, articles);
+		}
+
+		return map;
+	}
+
+	private List<Article> getForPrintArticlesByTag(String tagBody) {
+		return articleDao.getForPrintArticlesByTag(tagBody);
 	}
 }

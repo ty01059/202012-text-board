@@ -1,6 +1,5 @@
 package com.sbs.example.mysqlTextBoard.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,29 +22,61 @@ public class BuildService {
 		System.out.println("site/article 폴더 생성");
 		Util.mkdirs("site");
 
+//		Util.copyDir("site_template/img", "site/img");
+
+		Util.copy("site_template/favicon.ico", "site/favicon.ico");
 		Util.copy("site_template/app.css", "site/app.css");
 		Util.copy("site_template/app.js", "site/app.js");
-		Util.copy("site_template/favicon.ico", "site/favicon.ico");
-
+		
 		loadDataFromDisqus();
 		loadDataFromGa4Data();
-		
+
 		buildIndexPage();
+		buildArticleTagPage();
 		buildArticleSearchPage();
 		buildArticleListPages();
 		buildArticleDetailPages();
 	}
 
+	public void buildArticleTagPage() {
+		Map<String, List<Article>> articlesByTagMap = Container.articleService.getArticlesByTagMap();
+		
+		String jsonText = Util.getJsonText(articlesByTagMap);
+		Util.writeFile("site/article_tag.json", jsonText);
+	}
+
+	private void buildArticleSearchPage() {
+		List<Article> articles = articleService.getForPrintArticles(0);
+		String jsonText = Util.getJsonText(articles);
+		Util.writeFile("site/article_list.json", jsonText);
+		
+		Util.copy("site_template/article_search.js", "site/article_search.js");
+		
+		StringBuilder sb = new StringBuilder();
+
+		String head = getHeadHtml("article_search");
+		String foot = Util.getFileContents("site_template/foot.html");
+
+		String html = Util.getFileContents("site_template/article_search.html");
+
+		sb.append(head);
+		sb.append(html);
+		sb.append(foot);
+
+		String filePath = "site/article_search.html";
+		Util.writeFile(filePath, sb.toString());
+		System.out.println(filePath + " 생성");
+	}
+
 	private void loadDataFromGa4Data() {
 		Container.googleAnalyticsApiService.updatePageHits();
 	}
-	
+
 	private void loadDataFromDisqus() {
 		Container.disqusApiService.updateArticleCounts();
 	}
 
-	private void buildArticleListPage(Board board, int itemsInAPage, int pageBoxSize, List<Article> articles,
-			int page) {
+	private void buildArticleListPage(Board board, int itemsInAPage, int pageBoxSize, List<Article> articles, int page) {
 		StringBuilder sb = new StringBuilder();
 
 		// 헤더 시작
@@ -123,8 +154,7 @@ public class BuildService {
 		boolean pageBoxEndAfterBtnNeedToShow = pageBoxEndAfterPage != pageBoxEndPage;
 
 		if (pageBoxStartBeforeBtnNeedToShow) {
-			pageMenuContent.append("<li><a href=\"" + getArticleListFileName(board, pageBoxStartBeforePage)
-					+ "\" class=\"flex flex-ai-c\">&lt; 이전</a></li>");
+			pageMenuContent.append("<li><a href=\"" + getArticleListFileName(board, pageBoxStartBeforePage) + "\" class=\"flex flex-ai-c\">&lt; 이전</a></li>");
 		}
 
 		for (int i = pageBoxStartPage; i <= pageBoxEndPage; i++) {
@@ -134,13 +164,11 @@ public class BuildService {
 				selectedClass = "article-page-menu__link--selected";
 			}
 
-			pageMenuContent.append("<li><a href=\"" + getArticleListFileName(board, i) + "\" class=\"flex flex-ai-c "
-					+ selectedClass + "\">" + i + "</a></li>");
+			pageMenuContent.append("<li><a href=\"" + getArticleListFileName(board, i) + "\" class=\"flex flex-ai-c " + selectedClass + "\">" + i + "</a></li>");
 		}
 
 		if (pageBoxEndAfterBtnNeedToShow) {
-			pageMenuContent.append("<li><a href=\"" + getArticleListFileName(board, pageBoxEndAfterPage)
-					+ "\" class=\"flex flex-ai-c\">다음 &gt;</a></li>");
+			pageMenuContent.append("<li><a href=\"" + getArticleListFileName(board, pageBoxEndAfterPage) + "\" class=\"flex flex-ai-c\">다음 &gt;</a></li>");
 		}
 
 		String body = bodyTemplate.replace("${article-list__main-content}", mainContent.toString());
@@ -204,18 +232,17 @@ public class BuildService {
 	private void buildArticleDetailPages() {
 		List<Board> boards = articleService.getForPrintBoards();
 
-		String head = getHeadHtml("article_detail");
 		String bodyTemplate = Util.getFileContents("site_template/article_detail.html");
 		String foot = Util.getFileContents("site_template/foot.html");
 
 		for (Board board : boards) {
 			List<Article> articles = articleService.getForPrintArticles(board.getId());
 
-			// 5
-			// i : 0 ~ 4
-			// 0, 1, 2, 3, 4
 			for (int i = 0; i < articles.size(); i++) {
 				Article article = articles.get(i);
+
+				String head = getHeadHtml("article_detail", article);
+
 				Article prevArticle = null;
 				int prevArticleIndex = i + 1;
 				int prevArticleId = 0;
@@ -237,7 +264,7 @@ public class BuildService {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(head);
-				
+
 				String articleBodyForPrint = article.getBody();
 				articleBodyForPrint = articleBodyForPrint.replaceAll("script", "t-script");
 
@@ -245,36 +272,23 @@ public class BuildService {
 				body = body.replace("${article-detail__board-name}", article.getExtra__boardName());
 				body = body.replace("${article-detail__reg-date}", article.getRegDate());
 				body = body.replace("${article-detail__writer}", article.getExtra__writer());
-				body = body.replace("${article-detail__body}", articleBodyForPrint);
+
 				body = body.replace("${article-detail__likes-count}", article.getLikesCount() + "");
 				body = body.replace("${article-detail__comments-count}", article.getCommentsCount() + "");
-				body = body.replace("${article-detail__view-count}", article.getViewCount() + "");
+				body = body.replace("${article-detail__hit-count}", article.getHitCount() + "");
 
-				body = body.replace("${article-detail__link-prev-article-url}",
-						getArticleDetailFileName(prevArticleId));
-				body = body.replace("${article-detail__link-prev-article-title-attr}",
-						prevArticle != null ? prevArticle.getTitle() : "");
-				body = body.replace("${article-detail__link-prev-article-class-addi}",
-						prevArticleId == 0 ? "a-pointer-events-none" : "");
-				body = body.replace("${article-detail__link-list-url}",
-						getArticleListFileName(article.getExtra__boardCode(), 1));
+				body = body.replace("${article-detail__body}", articleBodyForPrint);
+				body = body.replace("${article-detail__link-prev-article-url}", getArticleDetailFileName(prevArticleId));
+				body = body.replace("${article-detail__link-prev-article-title-attr}", prevArticle != null ? prevArticle.getTitle() : "");
+				body = body.replace("${article-detail__link-prev-article-class-addi}", prevArticleId == 0 ? "none" : "");
+				body = body.replace("${article-detail__link-list-url}", getArticleListFileName(article.getExtra__boardCode(), 1));
 				body = body.replace("${article-detail__link-list-class-addi}", "");
-				body = body.replace("${article-detail__link-next-article-url}",
-						getArticleDetailFileName(nextArticleId));
-				body = body.replace("${article-detail__link-next-article-title-attr}",
-						nextArticle != null ? nextArticle.getTitle() : "");
-				body = body.replace("${article-detail__link-next-article-class-addi}",
-						nextArticleId == 0 ? "a-pointer-events-none" : "");
-				body = body.replace("${article-detail__link-youtube}", article.getExtra__boardCode().equals("free")
-						? "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iQqa20RTLIU\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
-						: "");
+				body = body.replace("${article-detail__link-next-article-url}", getArticleDetailFileName(nextArticleId));
+				body = body.replace("${article-detail__link-next-article-title-attr}", nextArticle != null ? nextArticle.getTitle() : "");
+				body = body.replace("${article-detail__link-next-article-class-addi}", nextArticleId == 0 ? "none" : "");
 
 				body = body.replace("${site-domain}", "blog.yhj.kr");
 				body = body.replace("${file-name}", getArticleDetailFileName(article.getId()));
-				
-				// JSP 개발 일지 영상
-				body = body.replace("${JSPCommunity_dev_1}", "-SoWYUaVeAo");
-				body = body.replace("${JSPCommunity_dev_2}", "p9v_xqM2Y_I");
 
 				sb.append(body);
 
@@ -352,8 +366,6 @@ public class BuildService {
 		head = head.replace("${site-main-url}", siteMainUrl);
 		head = head.replace("${site-keywords}", siteKeywords);
 
-		head = head.replace("${title-bar__content}", titleBarContentHtml);
-
 		return head;
 	}
 
@@ -380,28 +392,6 @@ public class BuildService {
 
 		return sb.toString();
 	}
-	
-	private void buildArticleSearchPage() {
-		List<Article> articles = articleService.getForPrintArticles(0);
-		String jsonText = Util.getJsonText(articles);
-		Util.writeFile("site/article_list.json", jsonText);
-		
-		Util.copy("site_template/article_search.js", "site/article_search.js");
-
-		StringBuilder sb = new StringBuilder();
-
-		String head = getHeadHtml("article_search");
-		String foot = Util.getFileContents("site_template/foot.html");
-		String html = Util.getFileContents("site_template/article_search.html");
-
-		sb.append(head);
-		sb.append(html);
-		sb.append(foot);
-
-		String filePath = "site/article_search.html";
-		Util.writeFile(filePath, sb.toString());
-		System.out.println(filePath + " 생성");
-	}
 
 	private String getTitleBarContentByPageName(String pageName) {
 		if (pageName.equals("index")) {
@@ -414,8 +404,6 @@ public class BuildService {
 			return "<i class=\"fab fa-free-code-camp\"></i> <span>FREE LIST</span>";
 		} else if (pageName.startsWith("article_list_notice")) {
 			return "<i class=\"fas fa-flag\"></i> <span>NOTICE LIST</span>";
-		} else if (pageName.startsWith("article_list_java")) {
-			return "<i class=\"fas fa-flag\"></i> <span>JAVA LIST</span>";
 		} else if (pageName.startsWith("article_list_")) {
 			String boardName = pageName.replace("article_list_", "").toUpperCase();
 			return "<i class=\"fas fa-clipboard-list\"></i> <span>" + boardName + " LIST</span>";

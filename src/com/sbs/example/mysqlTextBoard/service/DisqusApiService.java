@@ -27,7 +27,7 @@ public class DisqusApiService {
 
 		return rs;
 	}
-	
+
 	public void updateArticleCounts() {
 		List<Article> articles = Container.articleService.getForPrintArticles();
 
@@ -47,4 +47,5 @@ public class DisqusApiService {
 			}
 		}
 	}
+
 }

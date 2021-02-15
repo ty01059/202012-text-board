@@ -10,9 +10,9 @@ public class App {
 		Scanner sc = Container.scanner;
 
 		while (true) {
-			System.out.printf("명령어 : ");
+			System.out.printf("명령어) ");
 			String cmd = sc.nextLine();
-			
+
 			MysqlUtil.setDBInfo(Container.config.getDbHost(), Container.config.getDbId(), Container.config.getDbPw(), Container.config.getDbName());
 
 			boolean needToExit = false;

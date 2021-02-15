@@ -4,6 +4,7 @@ import com.sbs.example.mysqlutil.MysqlUtil;
 import com.sbs.example.mysqlutil.SecSql;
 
 public class Ga4DataDao {
+
 	public int deletePagePath(String pagePath) {
 		SecSql sql = new SecSql();
 		sql.append("DELETE");
@@ -23,4 +24,5 @@ public class Ga4DataDao {
 
 		return MysqlUtil.insert(sql);
 	}
+
 }

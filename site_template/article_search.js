@@ -4,9 +4,7 @@ $.get(
 	'article_list.json',
 	{},
 	function(data) {
-		data.forEach((row) => {
-			console.log(row);
-
+		data.forEach((row, index) => {
 			const article = {
 				id: row.id,
 				regDate: row.regDate,

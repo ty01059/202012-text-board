@@ -68,7 +68,7 @@ public class ArticleDao {
 
 	public int modify(Map<String, Object> args) {
 		SecSql sql = new SecSql();
-		
+
 		int id = (int) args.get("id");
 		String title = args.get("title") != null ? (String) args.get("title") : null;
 		String body = args.get("body") != null ? (String) args.get("body") : null;
@@ -77,6 +77,7 @@ public class ArticleDao {
 
 		sql.append("UPDATE article");
 		sql.append(" SET updateDate = NOW()");
+
 		if (title != null) {
 			sql.append(", title = ?", title);
 		}
@@ -92,6 +93,7 @@ public class ArticleDao {
 		if (commentsCount != -1) {
 			sql.append(", commentsCount = ?", commentsCount);
 		}
+
 		sql.append("WHERE id = ?", id);
 
 		return MysqlUtil.update(sql);
@@ -191,8 +193,7 @@ public class ArticleDao {
 
 		return MysqlUtil.selectRowIntValue(sql);
 	}
-	
-	// 구글 애널리틱스 가져오기
+
 	public int updatePageHits() {
 		SecSql sql = new SecSql();
 		sql.append("UPDATE article AS AR");
@@ -214,7 +215,35 @@ public class ArticleDao {
 		sql.append(") AS GA4_PP");
 		sql.append("ON AR.id = GA4_PP.articleId");
 		sql.append("SET AR.hitCount = GA4_PP.hit");
-
+		
 		return MysqlUtil.update(sql);
+	}
+
+	public List<Article> getForPrintArticlesByTag(String tagBody) {
+		List<Article> articles = new ArrayList<>();
+
+		SecSql sql = new SecSql();
+		sql.append("SELECT A.*");
+		sql.append(", M.name AS extra__writer");
+		sql.append(", B.name AS extra__boardName");
+		sql.append(", B.code AS extra__boardCode");
+		sql.append("FROM article AS A");
+		sql.append("INNER JOIN `member` AS M");
+		sql.append("ON A.memberId = M.id");
+		sql.append("INNER JOIN `board` AS B");
+		sql.append("ON A.boardId = B.id");
+		sql.append("INNER JOIN `tag` AS T");
+		sql.append("ON T.relTypeCode = 'article'");
+		sql.append("AND A.id = T.relId");
+		sql.append("WHERE T.body = ?", tagBody);
+		sql.append("ORDER BY A.id DESC");
+
+		List<Map<String, Object>> articleMapList = MysqlUtil.selectRows(sql);
+
+		for (Map<String, Object> articleMap : articleMapList) {
+			articles.add(new Article(articleMap));
+		}
+
+		return articles;
 	}
 }
