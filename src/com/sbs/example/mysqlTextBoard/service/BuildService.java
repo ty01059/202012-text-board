@@ -22,9 +22,8 @@ public class BuildService {
 		System.out.println("site/article 폴더 생성");
 		Util.mkdirs("site");
 
-//		Util.copyDir("site_template/img", "site/img");
-
 		Util.copy("site_template/favicon.ico", "site/favicon.ico");
+		Util.copy("site_template/img/logo/feather-pen.png", "site/feather-pen.png");
 		Util.copy("site_template/app.css", "site/app.css");
 		Util.copy("site_template/app.js", "site/app.js");
 		
